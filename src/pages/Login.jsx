@@ -22,7 +22,8 @@ const Login = () => {
         signInUser(data.email, data.password)
             .then(result => {
                 console.log(result.user)
-                navigate(from,{replace: true})
+                 navigate(`${location.state?location.state:"/"}`)
+                // navigate(from,{replace: true})
             })
             .catch(error => {
                 console.log(error)

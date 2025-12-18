@@ -13,7 +13,7 @@ const SocialLogin = () => {
     const { signInGoogle } = useAuth();
     const axiosSecure = useAxiosSecure();
     const location = useLocation();
-    const from = location.state?.from?.pathname || '/';
+    // const from = location.state?.from?.pathname || '/';
     console.log(location)
     const navigate = useNavigate();
 
@@ -37,7 +37,8 @@ const SocialLogin = () => {
                         
                     }
                 )
-                navigate(from,{replace: true});
+                // navigate(from,{replace: true});
+                   navigate(`${location.state?location.state:"/"}`)
 
 
             })

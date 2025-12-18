@@ -12,10 +12,29 @@ import AllProducts from "../pages/AllProducts";
 import AddProduct from "../pages/AddProduct";
 import ApprovedOrders from "../pages/ApprovedOrders";
 import AllOrders from "../pages/AllOrders";
-import PendingOrders from "../pages/PendingOrders";
+
 import ManageProducts from "../pages/ManageProducts";
 import ManageUsers from "../pages/ManageUsers";
 import DashboardHome from "../pages/DashboardHome";
+import QuickLinks from "../components/QuickLinks";
+import About from "../pages/About";
+import Contact from "../pages/Contact";
+import Terms from "../pages/Terms";
+import Privacy from "../pages/Privacy";
+import Error from "../pages/Error";
+import Products from "../pages/Products";
+
+import PrivateRoute from "./PrivateRoute";
+import ProductDetails from "../pages/ProductDetails";
+// import PendingOrders from "../pages/PendingOrders";
+
+import BookingForm from "../pages/BookingForm";
+import PaymentSuccess from "../pages/payments/PaymentSuccess";
+import PaymentCancelled from "../pages/payments/PaymentCancelled";
+import OrderDetails from "../pages/OrderDetails";
+import UpdateProduct from "../pages/UpdateProduct";
+import PendingOrders from "../pages/PendingOrders";
+
 
 
 export const router = createBrowserRouter([
@@ -51,10 +70,22 @@ export const router = createBrowserRouter([
         index: true,
         element: <DashboardHome></DashboardHome>
       },
+       {
+        path: 'payment-success',
+        element: <PaymentSuccess></PaymentSuccess>
+      }, 
+      {
+        path: 'payment-cancelled', 
+       element: <PaymentCancelled></PaymentCancelled>
+      }, 
     {
         path:'my-orders',
         element:<MyOrders></MyOrders>
       },
+        {
+    path: "order-details/:id", 
+    element: <OrderDetails />,
+},
     {
         path:'track-order',
         element:<TrackOrder></TrackOrder>
@@ -83,10 +114,15 @@ export const router = createBrowserRouter([
         path:'pending-orders',
         element:<PendingOrders></PendingOrders>
       },
-    {
-        path:'manage-products',
-        element:<ManageProducts></ManageProducts>
-      },
+  {
+    path: 'manage-products',
+    element: <ManageProducts />, 
+    
+},
+{
+    path: 'update-product/:id',
+    element: <UpdateProduct />, 
+},
     {
         path:'manage-users',
         element:<ManageUsers></ManageUsers>
@@ -95,8 +131,51 @@ export const router = createBrowserRouter([
     ]
    
   },
+
+  
+    {
+        path: "/quick",
+        element: <QuickLinks></QuickLinks>,
+        children:[
+
+             {
+        path: "/quick/about",
+        element: <About></About>
+    },
+    {
+        path: "/quick/contact",
+        element: <Contact></Contact>
+    },
+    {
+        path: "/quick/terms",
+        // element: <Terms></Terms>
+        element: <PrivateRoute>
+          <Terms></Terms>
+        </PrivateRoute>
+    },
+    {
+        path: "/quick/privacy",
+        element: <Privacy></Privacy>
+    }
+        ]
+        
+    },
+    {
+      path:'/products',
+      element:<Products></Products>
+
+    },
+    {
+    path: '/products/:id',
+    element: <ProductDetails />, 
+},
+    {
+
+      path:'/book-order/:id',
+      element: <BookingForm></BookingForm>
+    },
   {
         path: '/*',
-        element: <div>error</div>
+        element: <Error></Error>
       },
 ]);

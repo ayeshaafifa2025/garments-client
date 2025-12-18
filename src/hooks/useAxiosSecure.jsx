@@ -3,12 +3,18 @@ import React from 'react';
 
 
 const axiosSecure = axios.create({
-    baseURL: 'https://garments-server.vercel.app'
+    // baseURL: 'https://garments-server.vercel.app'
+    baseURL: 'http://localhost:3000'
 })
 
 const useAxiosSecure = () => {
+
 
     return axiosSecure;
 };
 
 export default useAxiosSecure;
+
+
+
+
