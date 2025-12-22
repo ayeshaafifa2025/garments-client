@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams, useLocation, useNavigate } from 'react-router'; 
@@ -18,11 +19,11 @@ const splitName = (displayName) => {
 
 const InputField = ({ label, value, readOnly, highlight, className = '' }) => (
     <div className="flex flex-col">
-        <label className="text-sm font-medium text-gray-600">{label}</label>
+        <label className="text-xs sm:text-sm font-medium text-gray-600">{label}</label>
         <input 
             value={value} 
             readOnly={readOnly} 
-            className={`p-3 rounded-lg ${readOnly ? 'bg-gray-100 text-gray-700 border border-gray-300' : 'border'} ${highlight ? 'font-bold text-lg text-indigo-700 bg-indigo-50' : ''} ${className}`} 
+            className={`p-2 sm:p-3 rounded-lg text-sm ${readOnly ? 'bg-gray-100 text-gray-700 border border-gray-300' : 'border'} ${highlight ? 'font-bold text-base sm:text-lg text-indigo-700 bg-indigo-50' : ''} ${className}`} 
         />
     </div>
 );
@@ -31,13 +32,12 @@ const ManagerPhotoField = ({ label, photoUrl, managerName }) => {
 
     return (
         <div className="flex flex-col">
-            <label className="text-sm font-medium text-gray-600">{label}</label>
-            <div className="mt-2">
+            <label className="text-xs sm:text-sm font-medium text-gray-600">{label}</label>
+            <div className="mt-1 sm:mt-2">
                 <img 
                     src={photoUrl} 
                     alt={managerName || "Manager Photo"} 
-                    
-                    className="w-12 h-12 rounded-full object-cover border-2 border-indigo-500 shadow-md"
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-indigo-500 shadow-md"
                     loading="lazy"
                 />
             </div>
@@ -47,7 +47,7 @@ const ManagerPhotoField = ({ label, photoUrl, managerName }) => {
 
 const QuantityField = ({ register, errors, min, max }) => (
     <div className="flex flex-col">
-        <label className="text-sm font-medium text-gray-600">Order Quantity (Min: {min}, Max: {max})</label>
+        <label className="text-xs sm:text-sm font-medium text-gray-600">Order Quantity (Min: {min}, Max: {max})</label>
         <input 
             type="number"
             {...register("orderQuantity", { 
@@ -56,7 +56,7 @@ const QuantityField = ({ register, errors, min, max }) => (
                 min: { value: min, message: `Minimum order is ${min}` },
                 max: { value: max, message: `Maximum available is ${max}` }
             })} 
-            className="border p-3 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" 
+            className="border p-2 sm:p-3 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm" 
         />
         {errors.orderQuantity && <p className="text-red-500 text-xs mt-1">{errors.orderQuantity.message}</p>}
     </div>
@@ -93,7 +93,7 @@ const BookingForm = () => {
     });
 
     if (!productData || !user) {
-        return <p className="text-center text-red-500 py-20"> Facing problem to load data </p>;
+        return <p className="text-center text-red-500 py-20 text-xl font-semibold"> Failed to load product or user data. </p>;
     }
     
     const quantity = watch('orderQuantity');
@@ -161,107 +161,109 @@ const BookingForm = () => {
     };
 
     return (
-        <div>
-<Helmet>
+        <div className="min-h-screen bg-gray-50">
+            <Helmet>
                 <title>
                     Booking Form
                 </title>
             </Helmet>
 
 
-            <div className="container mx-auto p-6 pt-10">
-            <h2 className="text-3xl font-extrabold mb-8 text-center text-gray-800">
-                <span className="text-green-600">Order Booking:</span> {productData.productName}
-            </h2>
-            
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-2xl border border-gray-100">
+            <div className="container mx-auto p-4 sm:p-6 pt-8 sm:pt-10">
+                <h2 className="text-2xl sm:text-3xl font-extrabold mb-6 sm:mb-8 text-center text-gray-800">
+                    <span className="text-green-600">Order Booking:</span> {productData.productName}
+                </h2>
                 
-                <h3 className="text-xl font-bold border-b pb-2 text-indigo-700">Buyer & Product Information</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <InputField label="Buyer Email (Read-only)" value={user?.email} readOnly />
-                    <InputField label="Product Title (Read-only)" value={productData.productName} readOnly />
-
-                    <InputField label="Manager Name (Read-only)" value={productData.managerName} readOnly />
-                    <InputField label="Manager Email (Read-only)" value={productData.managerEmail} readOnly />
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6 max-w-2xl mx-auto bg-white p-6 sm:p-8 rounded-xl shadow-2xl border border-gray-100">
                     
-                   
-                    <ManagerPhotoField 
-                        label="Manager Photo" 
-                        photoUrl={productData.managerPhoto} 
-                        managerName={productData.managerName}
-                    />
+                    <h3 className="text-lg sm:text-xl font-bold border-b pb-2 text-indigo-700">Buyer & Product Information</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                        <InputField label="Buyer Email (Read-only)" value={user?.email} readOnly />
+                        <InputField label="Product Title (Read-only)" value={productData.productName} readOnly />
 
-                    <InputField label="Per Piece Price" value={`$${productData.price}`} readOnly highlight />
-                    <InputField label="Payment Method" value={productData.paymentOption} readOnly />
+                        <InputField label="Manager Name (Read-only)" value={productData.managerName} readOnly />
+                        <InputField label="Manager Email (Read-only)" value={productData.managerEmail} readOnly />
+                        
+                        
+                        <ManagerPhotoField 
+                            label="Manager Photo" 
+                            photoUrl={productData.managerPhoto} 
+                            managerName={productData.managerName}
+                        />
 
-                    <InputField label="First Name" value={userFirstName} readOnly />
-                    <InputField label="Last Name" value={userLastName} readOnly />
-                </div>
-                
-                <div className="pt-4">
-                    <InputField 
-                        label="TOTAL Order Price (Read-only)" 
-                        value={`$${calculatedPrice}`} 
-                        readOnly 
-                        highlight 
-                        className="bg-yellow-50 border-yellow-300"
-                    />
-                </div>
+                        <InputField label="Per Piece Price" value={`$${productData.price}`} readOnly highlight />
+                        <InputField label="Payment Method" value={productData.paymentOption} readOnly />
 
-                <h3 className="text-xl font-bold border-b pb-2 pt-6 text-indigo-700">Order & Delivery Details</h3>
+                        <InputField label="First Name" value={userFirstName} readOnly />
+                        <InputField label="Last Name" value={userLastName} readOnly />
+                    </div>
+                    
+                    <div className="pt-2 sm:pt-4">
+                        <InputField 
+                            label="TOTAL Order Price (Read-only)" 
+                            value={`$${calculatedPrice}`} 
+                            readOnly 
+                            highlight 
+                            className="bg-yellow-50 border-yellow-300"
+                        />
+                    </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <QuantityField 
-                        register={register} 
-                        errors={errors}
-                        min={productData.minQuantity} 
-                        max={productData.availableQuantity}
-                    />
+                    <h3 className="text-lg sm:text-xl font-bold border-b pb-2 pt-4 sm:pt-6 text-indigo-700">Order & Delivery Details</h3>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                        <QuantityField 
+                            register={register} 
+                            errors={errors}
+                            min={productData.minQuantity} 
+                            max={productData.availableQuantity}
+                        />
+
+                        <div className="flex flex-col">
+                            <label className="text-xs sm:text-sm font-medium text-gray-600">Contact Number</label>
+                            <input {...register("contactNumber", { required: "Contact Number is required" })} 
+                                placeholder="Your Contact Number" 
+                                className="border p-2 sm:p-3 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm" />
+                            {errors.contactNumber && <p className="text-red-500 text-xs mt-1">{errors.contactNumber.message}</p>}
+                        </div>
+                    </div>
 
                     <div className="flex flex-col">
-                        <label className="text-sm font-medium text-gray-600">Contact Number</label>
-                        <input {...register("contactNumber", { required: "Contact Number is required" })} 
-                            placeholder="Your Contact Number" 
-                            className="border p-3 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" />
-                        {errors.contactNumber && <p className="text-red-500 text-xs mt-1">{errors.contactNumber.message}</p>}
+                        <label className="text-xs sm:text-sm font-medium text-gray-600">Delivery Address</label>
+                        <textarea {...register("deliveryAddress", { required: "Delivery Address is required" })} 
+                            placeholder="Your full delivery address" rows="2" 
+                            className="w-full border p-2 sm:p-3 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm" />
+                        {errors.deliveryAddress && <p className="text-red-500 text-xs mt-1">{errors.deliveryAddress.message}</p>}
                     </div>
-                </div>
 
-                <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">Delivery Address</label>
-                    <textarea {...register("deliveryAddress", { required: "Delivery Address is required" })} 
-                        placeholder="Your full delivery address" rows="3" 
-                        className="w-full border p-3 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" />
-                    {errors.deliveryAddress && <p className="text-red-500 text-xs mt-1">{errors.deliveryAddress.message}</p>}
-                </div>
-
-                <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">Additional Notes / Instructions</label>
-                    <textarea {...register("additionalNotes")} 
-                        placeholder="e.g., Delivery instructions, preferred time (Optional)" rows="2" 
-                        className="w-full border p-3 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" />
-                </div>
+                    <div className="flex flex-col">
+                        <label className="text-xs sm:text-sm font-medium text-gray-600">Additional Notes / Instructions</label>
+                        <textarea {...register("additionalNotes")} 
+                            placeholder="e.g., Delivery instructions, preferred time (Optional)" rows="2" 
+                            className="w-full border p-2 sm:p-3 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm" />
+                    </div>
 
 
-                <button type="submit" className="
-                text-black bg-gradient-to-r from-purple-300 via-cyan-200 to-teal-300
-                px-6 sm:px-2 py-2 sm:py-3.5 
-                rounded-xl 
-                font-medium shadow-lg transition-all duration-300
-                hover:shadow-xl hover:scale-[1.02] 
-                hover:from-purple-300 hover:via-cyan-300 hover:to-teal-400
-            ">
-                    {productData.paymentOption === 'Cash on Delivery' ? 
-                        `Confirm Order (Pay on Delivery)` : 
-                        `Proceed to Payment ($${calculatedPrice})`
-                    }
-                </button>
+                    <button type="submit" className="
+                        w-full 
+                        text-gray-800 
+                        bg-gradient-to-r from-purple-300 via-cyan-200 to-teal-300
+                        px-4 py-2 sm:py-3 
+                        rounded-xl 
+                        text-sm sm:text-base
+                        font-semibold shadow-lg transition-all duration-300
+                        hover:shadow-xl hover:scale-[1.01] 
+                        hover:from-purple-300 hover:via-cyan-300 hover:to-teal-400
+                    ">
+                        {productData.paymentOption === 'Cash on Delivery' ? 
+                            `CONFIRM ORDER (Pay $${calculatedPrice} on Delivery)` : 
+                            `PROCEED TO PAYMENT ($${calculatedPrice})`
+                        }
+                    </button>
 
-            </form>
-        </div>
+                </form>
+            </div>
         </div>
     );
 };
 
 export default BookingForm;
-

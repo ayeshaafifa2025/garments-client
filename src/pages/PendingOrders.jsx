@@ -1,197 +1,221 @@
+
+
+
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { FiCheckCircle, FiXCircle, FiEye } from 'react-icons/fi';
 import { Link } from 'react-router';
-import useAuth from '../hooks/useAuth'; 
-import useAxiosSecure from '../hooks/useAxiosSecure'; 
-import { toast } from 'react-toastify'; 
-import Swal from 'sweetalert2'; 
+import useAuth from '../hooks/useAuth';
+import useAxiosSecure from '../hooks/useAxiosSecure';
+import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 import { Helmet } from 'react-helmet-async';
 
-const formatOrderDate = (dateString) => {
-    if (!dateString) return 'N/A';
-    try {
-        return new Date(dateString).toLocaleDateString('en-GB', { 
-            year: 'numeric', 
-            month: 'short', 
-            day: '2-digit' 
-        });
-    } catch {
-        return 'Invalid Date';
-    }
+const formatOrderDate = dateString => {
+  if (!dateString) return 'N/A';
+  try {
+    return new Date(dateString).toLocaleDateString('en-GB', {
+      year: 'numeric',
+      month: 'short',
+      day: '2-digit',
+    });
+  } catch {
+    return 'Invalid Date';
+  }
 };
 
-
 const PendingOrders = () => {
-    const { user } = useAuth();
-    const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
-   
-    const { data: pendingOrders = [], isLoading, refetch } = useQuery({
-        queryKey: ['pendingOrders', user?.email],
-        enabled: !!user?.email, 
-        queryFn: async () => {
-          
-            const res = await axiosSecure.get(`/manager-pending-orders?email=${user.email}`);
-            return res.data;
-        },
-    });
+  const {
+    data: pendingOrders = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ['pendingOrders', user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/manager-pending-orders?email=${user.email}`
+      );
+      return res.data;
+    },
+  });
 
-   
-    const handleUpdateStatus = (orderId, currentTrackingId, action) => { 
-        const newStatus = action === 'approve' ? 'Approved' : 'Rejected';
-        const actionTitle = action === 'approve' ? 'Approve' : 'Reject';
-        const actionColor = action === 'approve' ? '#22c55e' : '#ef4444';
+  const handleUpdateStatus = (orderId, trackingId, action) => {
+    const newStatus = action === 'approve' ? 'Approved' : 'Rejected';
 
-        Swal.fire({
-            title: `Confirm ${actionTitle}?`,
-            text: `Are you sure you want to change the status to ${newStatus}?`,
-            icon: action === 'approve' ? 'question' : 'warning',
-            showCancelButton: true,
-            confirmButtonColor: actionColor,
-            cancelButtonColor: '#6b7280',
-            confirmButtonText: `Yes, ${actionTitle} it!`
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                try {
-                    
-                    const res = await axiosSecure.patch(`/orders/${orderId}/status`, {
-                        newStatus: newStatus,
-                        trackingId: currentTrackingId 
-                    }); 
-                    
-                    if (res.data.success) {
-                        toast.success(`Order successfully ${action}d! Status: ${newStatus}`);
-                        refetch(); 
-                    } else if (res.data.message) {
-                         toast.error(res.data.message);
-                    }
-                } catch (error) {
-                    toast.error(`Failed to ${action} order. Check network and console.`);
-                }
+    Swal.fire({
+      title: `Confirm ${action}?`,
+      text: `Change order status to ${newStatus}?`,
+      icon: action === 'approve' ? 'question' : 'warning',
+      showCancelButton: true,
+      confirmButtonColor: action === 'approve' ? '#22c55e' : '#ef4444',
+      cancelButtonColor: '#6b7280',
+      confirmButtonText: `Yes, ${action}`,
+    }).then(async result => {
+      if (result.isConfirmed) {
+        try {
+          const res = await axiosSecure.patch(
+            `/orders/${orderId}/status`,
+            {
+              newStatus,
+              trackingId,
             }
-        });
-    };
-    
-   
-    if (!user) {
-        return <p className="text-center py-10 text-red-500">Please login to manage orders.</p>;
-    }
+          );
 
-    if (isLoading) {
-        return <p className="text-center py-10 text-indigo-600">Loading pending orders...</p>;
-    }
+          if (res.data.success) {
+            toast.success(`Order ${newStatus}`);
+            refetch();
+          } else {
+            toast.error(res.data.message || 'Update failed');
+          }
+        } catch {
+          toast.error('Network error');
+        }
+      }
+    });
+  };
 
-    if (pendingOrders.length === 0) {
-        return (
-            <div className="text-center py-20">
-                <h1 className="text-3xl font-bold text-gray-800">Pending Orders</h1>
-                <p className="text-xl text-gray-500 mt-4">🎉 Great! You have no pending orders requiring approval.</p>
-            </div>
-        );
-    }
-
-    
+  if (!user)
     return (
-        <div>
-            <Helmet>
-                <title>
-                    Pending orders
-                </title>
-            </Helmet>
-
-            <div className="p-4 sm:p-6 lg:p-8">
-            <h1 className="text-3xl font-bold mb-6 text-gray-800 border-b pb-4">Pending Orders ({pendingOrders.length})</h1>
-            
-            <div className="overflow-x-auto bg-white rounded-xl shadow-lg">
-                <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-orange-50">
-                        <tr>
-                            <th className="px-6 py-3 text-left text-xs font-bold text-orange-700 uppercase tracking-wider">Order ID</th>
-                            <th className="px-6 py-3 text-left text-xs font-bold text-orange-700 uppercase tracking-wider">User (Buyer)</th>
-                            <th className="px-6 py-3 text-left text-xs font-bold text-orange-700 uppercase tracking-wider">Product</th>
-                            <th className="px-6 py-3 text-left text-xs font-bold text-orange-700 uppercase tracking-wider">Quantity</th>
-                            <th className="px-6 py-3 text-left text-xs font-bold text-orange-700 uppercase tracking-wider">Order Date</th>
-                            <th className="px-6 py-3 text-center text-xs font-bold text-orange-700 uppercase tracking-wider">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                        {pendingOrders.map((order) => (
-                            <tr key={order._id} className="hover:bg-gray-50">
-                                
-                                <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                    {order.trackingId || 'N/A'}
-                                </td>
-                                
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {order.firstName} {order.lastName} ({order.buyerEmail})
-                                </td>
-                                
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-medium">
-                                    {order.productTitle}
-                                </td>
-                                
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {order.orderQuantity}
-                                </td>
-                                
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {formatOrderDate(order.createdAt)}
-                                </td>
-                                
-                                <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium space-x-2">
-                                    
-                                    {/* Approve Button */}
-                                    <button 
-                                        title="Approve Order"
-                                        onClick={() => handleUpdateStatus(order._id, order.trackingId, 'approve')}
-                                       className="
-                text-black bg-gradient-to-r from-purple-300 via-cyan-200 to-teal-300
-                px-6 sm:px-2 py-2 sm:py-3.5 
-                rounded-xl 
-                font-medium shadow-lg transition-all duration-300
-                hover:shadow-xl hover:scale-[1.02] 
-                hover:from-purple-300 hover:via-cyan-300 hover:to-teal-400
-            "
-                                    >
-                                        <FiCheckCircle className="h-5 w-5" />
-                                    </button>
-                                    
-                                    {/* Reject Button */}
-                                    <button 
-                                        title="Reject Order"
-                                        onClick={() => handleUpdateStatus(order._id, order.trackingId, 'reject')}
-                                        className="
-                text-black bg-gradient-to-r from-purple-300 via-cyan-200 to-teal-300
-                px-6 sm:px-2 py-2 sm:py-3.5 
-                rounded-xl 
-                font-medium shadow-lg transition-all duration-300
-                hover:shadow-xl hover:scale-[1.02] 
-                hover:from-purple-300 hover:via-cyan-300 hover:to-teal-400
-            "
-                                    >
-                                        <FiXCircle className="h-5 w-5" />
-                                    </button>
-
-                                    {/* View Button */}
-                                    <Link 
-                                        to={`/dashboard/order-details/${order._id}`}
-                                        state={{ orderData: order }} 
-                                        title="View Details"
-                                        className="inline-block text-indigo-600 hover:text-indigo-900 p-2 rounded-full hover:bg-indigo-50 transition duration-150"
-                                    >
-                                        <FiEye className="h-5 w-5" />
-                                    </Link>
-
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        </div>
+      <div className="text-center py-20 text-red-500 text-lg">
+        Please login to manage orders
+      </div>
     );
+
+  if (isLoading)
+    return (
+      <div className="text-center py-16 text-indigo-600 text-lg">
+        Loading pending orders...
+      </div>
+    );
+
+  if (pendingOrders.length === 0)
+    return (
+      <div className="text-center py-20">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
+          Pending Orders
+        </h1>
+        <p className="text-lg sm:text-xl text-gray-500 mt-4">
+          🎉 No pending orders
+        </p>
+      </div>
+    );
+
+  return (
+    <div className="min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-10 py-6">
+      <Helmet>
+        <title>Pending orders</title>
+      </Helmet>
+
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-800 border-b pb-3">
+        Pending Orders ({pendingOrders.length})
+      </h1>
+
+      <div className="overflow-x-auto bg-white rounded-xl shadow-xl">
+        <table className="min-w-[850px] w-full divide-y divide-gray-200">
+          <thead className="bg-orange-50">
+            <tr>
+              <th className="px-4 py-3 text-left text-xs font-bold text-orange-700 uppercase">
+                Order ID
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-bold text-orange-700 uppercase">
+                Buyer
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-bold text-orange-700 uppercase">
+                Product
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-bold text-orange-700 uppercase">
+                Qty
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-bold text-orange-700 uppercase">
+                Date
+              </th>
+              <th className="px-4 py-3 text-center text-xs font-bold text-orange-700 uppercase">
+                Actions
+              </th>
+            </tr>
+          </thead>
+
+          <tbody className="divide-y divide-gray-200">
+            {pendingOrders.map(order => (
+              <tr key={order._id} className="hover:bg-gray-50">
+                <td className="px-4 py-3 text-sm font-semibold">
+                  {order.trackingId || 'N/A'}
+                </td>
+
+                <td className="px-4 py-3 text-sm text-gray-600">
+                  {order.firstName} {order.lastName}
+                  <div className="text-xs text-gray-400">
+                    {order.buyerEmail}
+                  </div>
+                </td>
+
+                <td className="px-4 py-3 text-sm font-medium text-gray-700">
+                  {order.productTitle}
+                </td>
+
+                <td className="px-4 py-3 text-sm text-gray-500">
+                  {order.orderQuantity}
+                </td>
+
+                <td className="px-4 py-3 text-sm text-gray-500">
+                  {formatOrderDate(order.createdAt)}
+                </td>
+
+                <td className="px-4 py-3">
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
+                    <button
+                      onClick={() =>
+                        handleUpdateStatus(
+                          order._id,
+                          order.trackingId,
+                          'approve'
+                        )
+                      }
+                      className="inline-flex items-center justify-center gap-1 px-3 py-2 rounded-lg bg-gradient-to-r from-purple-300 via-cyan-200 to-teal-300 shadow hover:scale-105 transition"
+                    >
+                      <FiCheckCircle className="w-4 h-4" />
+                      <span className="text-xs font-medium">
+                        Approve
+                      </span>
+                    </button>
+
+                    <button
+                      onClick={() =>
+                        handleUpdateStatus(
+                          order._id,
+                          order.trackingId,
+                          'reject'
+                        )
+                      }
+                      className="inline-flex items-center justify-center gap-1 px-3 py-2 rounded-lg bg-gradient-to-r from-purple-300 via-cyan-200 to-teal-300 shadow hover:scale-105 transition"
+                    >
+                      <FiXCircle className="w-4 h-4" />
+                      <span className="text-xs font-medium">
+                        Reject
+                      </span>
+                    </button>
+
+                    <Link
+                      to={`/dashboard/order-details/${order._id}`}
+                      state={{ orderData: order }}
+                      className="inline-flex items-center justify-center gap-1 px-3 py-2 text-xs font-medium rounded-lg border border-gray-300 bg-white hover:bg-gray-100"
+                    >
+                      <FiEye className="w-4 h-4" />
+                      Details
+                    </Link>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 };
 
 export default PendingOrders;

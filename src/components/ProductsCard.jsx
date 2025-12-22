@@ -1,6 +1,7 @@
 
 
 import { Link } from 'react-router'; 
+import React from 'react';
 
 const ProductsCard = ({ product }) => {
 
@@ -9,19 +10,18 @@ const ProductsCard = ({ product }) => {
         productName, 
         images,
         availableQuantity, 
-        // description, 
         price, 
         category 
     } = product || {};
     
-   
-    
     const imageUrl = (images && images.length > 0) ? images[0] : 'https://i.ibb.co/h7g4B4s/placeholder-image.jpg';
 
     return (
-        
-
-        <div className='flex flex-col gap-2 w-full'>
+        <div 
+            className='col-span-1 cursor-pointer group bg-white shadow-lg border border-gray-100 p-3 rounded-xl transition duration-300 hover:shadow-2xl transform hover:-translate-y-1 flex flex-col h-full w-full'
+        >
+            <div className='flex flex-col gap-2 w-full h-full'>
+                
                 <div
                     className='
                         aspect-square 
@@ -34,7 +34,7 @@ const ProductsCard = ({ product }) => {
                     <img
                         className='
                             object-cover 
-                            h-full 
+                            h-80
                             w-full 
                             group-hover:scale-110 
                             transition
@@ -45,29 +45,43 @@ const ProductsCard = ({ product }) => {
                     />
                 </div>
                 
-                <div className='font-bold text-lg text-gray-800 truncate'>NAME:{productName}</div>
-                <div className='text-sm text-gray-600'>Category: {category}</div>
+                <div className='font-bold text-base sm:text-lg text-gray-800 truncate mt-2'>
+                    {productName}
+                </div>
                 
-              
-                <p className='text-sm text-gray-500 mb-2 h-10 overflow-hidden'>available:{
-availableQuantity}piece</p>
+                <div className='text-xs sm:text-sm text-gray-600 truncate'>
+                    Category: {category}
+                </div>
                 
-                <div className='flex flex-row items-center justify-between mt-auto pt-2'>
-                    <div className='font-extrabold text-xl text-indigo-600'> Price: ${price}</div>
+                <p className='text-xs sm:text-sm text-gray-500 mb-1 sm:mb-2'>
+                    Available: {availableQuantity} piece
+                </p>
+                
+                <div className='flex flex-row items-center justify-between mt-auto pt-2 border-t border-gray-100'>
+                    <div className='font-extrabold text-base sm:text-xl text-indigo-600'> 
+                        ${price}
+                    </div>
                     
-                 
                     <Link
-            to={`/products/${_id}`} 
-            className='col-span-1 cursor-pointer group shadow-lg border border-gray-100 p-3 rounded-xl transition duration-300 hover:shadow-2xl transform hover:-translate-y-1'
-        >
-            <span className="text-sm font-semibold text-white bg-indigo-500 px-3 py-1 rounded-full hover:bg-indigo-600 transition">
-                        View Details
-                    </span>
-            
-        </Link>
-                    
+                        to={`/products/${_id}`} 
+                        className='
+                            transition 
+                            duration-300 
+                            transform 
+                            hover:scale-105
+                            focus:outline-none 
+                            focus:ring-2 
+                            focus:ring-indigo-500 
+                            focus:ring-opacity-50
+                        '
+                    >
+                        <span className="text-xs sm:text-sm font-semibold text-white bg-indigo-500 px-3 py-1.5 rounded-lg shadow-md hover:bg-indigo-600 transition">
+                            View Details
+                        </span>
+                    </Link>
                 </div>
             </div>
+        </div>
     );
 };
 
