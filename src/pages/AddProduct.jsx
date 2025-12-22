@@ -5,11 +5,13 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 
 import useAuth from '../hooks/useAuth';
-import useAxios from '../hooks/useAxios';
+import useAxiosSecure from '../hooks/useAxiosSecure';
+import { Helmet } from 'react-helmet-async';
+
 
 const AddProduct = () => {
     const { register, handleSubmit, reset } = useForm();
-    const axios = useAxios();
+    const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
 
     const handleAddProduct = (data) => {
@@ -35,7 +37,7 @@ const AddProduct = () => {
 
         console.log('Product data:', productData);
 
-        axios.post('/products', productData)
+        axiosSecure.post('/products', productData)
             .then(res => {
                 if (res.data.insertedId) {
                     Swal.fire({
@@ -57,10 +59,17 @@ const AddProduct = () => {
     };
 
     return (
-        <div className="max-w-md mx-auto">
+       <div>
+        <Helmet>
+                <title>
+                    add-product
+                </title>
+            </Helmet>
+
+         <div className="max-w-md mx-auto">
             <h2 className="text-3xl font-bold mb-6">Add Product</h2>
             <form onSubmit={handleSubmit(handleAddProduct)}>
-                {/* Product Name */}
+               
                 <label className="label">Product Name</label>
                 <input
                     type="text"
@@ -69,7 +78,7 @@ const AddProduct = () => {
                     placeholder="Product Name"
                 />
 
-                {/* Product Description */}
+               
                 <label className="label">Product Description</label>
                 <textarea
                     {...register('description', { required: true })}
@@ -77,7 +86,7 @@ const AddProduct = () => {
                     placeholder="Product Description"
                 />
 
-                {/* Category */}
+            
                 <label className="label">Category</label>
                 <select {...register('category', { required: true })} className="select select-bordered w-full mb-4">
                     <option value="">Select Category</option>
@@ -87,7 +96,7 @@ const AddProduct = () => {
                     <option value="Accessories">Accessories</option>
                 </select>
 
-                {/* Price */}
+               
                 <label className="label">Price</label>
                 <input
                     type="number"
@@ -96,7 +105,7 @@ const AddProduct = () => {
                     placeholder="Price"
                 />
 
-                {/* Available Quantity */}
+           
                 <label className="label">Available Quantity</label>
                 <input
                     type="number"
@@ -105,7 +114,7 @@ const AddProduct = () => {
                     placeholder="Available Quantity"
                 />
 
-                {/* Minimum Order Quantity */}
+             
                 <label className="label">Minimum Order Quantity (MOQ)</label>
                 <input
                     type="number"
@@ -114,7 +123,7 @@ const AddProduct = () => {
                     placeholder="Minimum Order Quantity"
                 />
 
-                {/* Images URL */}
+            
                 <label className="label">Image URLs (comma separated)</label>
                 <input
                     type="text"
@@ -123,7 +132,7 @@ const AddProduct = () => {
                     placeholder="https://example.com/img1.jpg, https://example.com/img2.jpg"
                 />
 
-                {/* Demo Video Embed */}
+            
                 <label className="label">Demo Video Embed Link (YouTube)</label>
                 <input
                     type="text"
@@ -132,7 +141,7 @@ const AddProduct = () => {
                     placeholder="https://www.youtube.com/embed/..."
                 />
 
-                {/* Payment Options */}
+              
                 <label className="label">Payment Option</label>
                 <select {...register('paymentOption', { required: true })} className="select select-bordered w-full mb-4">
                     <option value="">Select Payment Option</option>
@@ -140,15 +149,23 @@ const AddProduct = () => {
                     <option value="PayFirst">PayFirst</option>
                 </select>
 
-                {/* Show on Home Page */}
+               
                 <label className="cursor-pointer label">
                     <span className="label-text">Show on Home Page</span>
                     <input type="checkbox" {...register('showOnHome')} className="checkbox ml-2" />
                 </label>
 
-                <button className="btn btn-primary w-full mt-4">Add Product</button>
+                <button className="
+                text-black bg-gradient-to-r from-purple-300 via-cyan-200 to-teal-300
+                px-6 sm:px-2 py-2 sm:py-3.5 
+                rounded-xl 
+                font-medium shadow-lg transition-all duration-300
+                hover:shadow-xl hover:scale-[1.02] 
+                hover:from-purple-300 hover:via-cyan-300 hover:to-teal-400
+            ">Add Product</button>
             </form>
         </div>
+       </div>
     );
 };
 

@@ -72,15 +72,18 @@ Pending Orders: Approve or reject pending orders.
 
 Approved Orders: Add tracking updates for approved orders.
 
-My Profile: View own profile info.
+
 
 Buyer Dashboard
 
-My Orders: View only orders placed by the logged-in user.
+My Orders: View only orders placed by the buyer.
 
 Track Order: View a timeline of order progress.
 
-My Profile: Update personal info.
+users dashboard: A logged in user has a dashboard also
+
+
+My Profile: show users info.
 
 5. Product Details & Booking
 
@@ -108,45 +111,55 @@ Theme toggle for light/dark mode.
 
 Error page for invalid routes.
 
-7. Technology Stack
-
+7. Technology Stack & NPM Packages Used
+ Technology Stack Overview
 Frontend: React.js, React Router, Tailwind CSS, DaisyUI
+
+Data Fetching/Management: React Query, Axios
 
 Authentication: Firebase Authentication
 
-Forms & Validation: React Hook Form
-
-Icons & Animations: React Icons, Swiper
-
-Notifications: React Toastify, SweetAlert2
-
-Charts & Analytics: Recharts
-
-HTTP Requests: Axios, React Query
+Form Handling: React Hook Form
 
 Build Tool: Vite
 
-NPM Packages Used
+ NPM Packages Used
+react: The core JavaScript library for building user interfaces.
 
-firebase: For authentication, database, and profile management.
+react-dom: Renders React components to the Document Object Model (DOM).
 
-react-router: For client-side routing and role-based protected routes.
+@tanstack/react-query: Manages server state: caching and asynchronous data fetching efficiently.
 
-tailwindcss: For responsive utility-first styling.
+axios: A promise-based HTTP client: used for making API requests.
 
-daisyui: For ready-to-use UI components.
+firebase: Provides services for authentication: real-time database, and profile management.
 
-react-icons: To use vector icons across the app.
+react-router: Enables client-side routing: and handles navigation for Single Page Applications (SPA).
 
-react-toastify: To show elegant pop-up notifications for success/error.
+react-hook-form: Used for powerful form validation: and submission handling with minimal re-renders.
 
-sweetalert2: For confirmation dialogs and alerts.
+tailwindcss: A utility-first CSS framework: for rapid, responsive UI development.
 
-swiper: To implement dynamic sliders for feedback or product sections.
+daisyui: A component library built on top of Tailwind CSS: providing ready-to-use UI components.
 
-react-hook-form: For form validation and submission handling.
+react-icons: Provides a vast collection of customizable vector icons: from popular libraries.
 
-recharts: To display charts in manager/admin dashboards.
+react-toastify: Used to display non-blocking, elegant pop-up notifications (toasts): for feedback.
 
-axios & react-query: For API calls and state management of server data.
+sweetalert2: Used for displaying custom, beautiful confirmation dialogs: and alerts.
 
+swiper: Used to create modern, dynamic sliders: carousels, and product image galleries.
+
+recharts: Used for displaying responsive charts and graphs: in dashboards for analytics.
+
+date-fns: A modern utility library: for manipulating, formatting, and comparing dates and times.
+
+lucide-react: A collection of minimal, modern SVG icons: provided as React components.
+
+react-helmet-async: Used to manage and control the document's head (e.g., setting page titles, meta tags): inside React components.
+
+@tailwindcss/vite: Provides deeper integration for Tailwind CSS: with the Vite build tool.
+
+vite: The fast build tool: used to bundle the project assets.
+
+@vitejs/plugin-react: A specific Vite plugin: required to correctly process and bundle React code.

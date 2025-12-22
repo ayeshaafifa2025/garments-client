@@ -1,5 +1,4 @@
 
-// FeedBackCard.jsx
 import React from "react";
 
 const FeedBackCard = ({ feedback }) => {

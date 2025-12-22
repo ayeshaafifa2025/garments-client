@@ -24,7 +24,14 @@ const Hero = () => {
             delivery with a modern and efficient workflow system.
           </p>
           <NavLink to="/products">
-            <button className="mt-8 px-7 py-3 bg-white text-indigo-700 font-semibold rounded-lg hover:bg-indigo-100 transition">
+            <button className="
+                text-black bg-gradient-to-r from-purple-300 via-cyan-200 to-teal-300
+                px-6 sm:px-8 py-3 sm:py-3.5 
+                rounded-xl 
+                font-medium shadow-lg transition-all duration-300
+                hover:shadow-xl hover:scale-[1.02] 
+                hover:from-purple-300 hover:via-cyan-300 hover:to-teal-400
+            ">
               see available items
             </button>
           </NavLink>

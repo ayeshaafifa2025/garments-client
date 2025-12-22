@@ -4,7 +4,7 @@ import React from 'react';
 
 
 const axiosInstance = axios.create({
-    // baseURL: 'https://garments-server.vercel.app'
+  
     baseURL: 'http://localhost:3000'
 })
 

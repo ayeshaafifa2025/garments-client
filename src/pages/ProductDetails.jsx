@@ -1,5 +1,6 @@
 
 
+
 import { useQuery } from '@tanstack/react-query';
 import { Link, useParams } from 'react-router';
 import useAxiosSecure from '../hooks/useAxiosSecure'; 
@@ -9,6 +10,31 @@ import { Pagination, Autoplay } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
+
+
+import { format, parseISO } from 'date-fns'; 
+import { Helmet } from 'react-helmet-async';
+import NavBar from '../components/NavBar';
+import Footer from '../components/Footer';
+
+
+
+const formatLocalBDTTime = (isoString) => {
+    if (!isoString) return 'N/A';
+    try {
+     
+        const date = parseISO(isoString); 
+
+        if (isNaN(date.getTime())) return 'Invalid Date';
+
+       
+        return format(date, 'MMM dd, yyyy, hh:mm:ss a');
+        
+    } catch (e) {
+        // console.error("Date formatting error:", e);
+        return 'Invalid Date';
+    }
+};
 
 
 const ProductDetails = () => {
@@ -45,7 +71,15 @@ const ProductDetails = () => {
     const videoSrc = product.demoVideoLink ? getVideoSrc(product.demoVideoLink) : null;
     
     return (
-       <div className="pt-8 pb-20">
+       <div>
+        <NavBar></NavBar>
+        <Helmet>
+                <title>
+                    products-details
+                </title>
+            </Helmet>
+
+        <div className="pt-8 pb-20">
                 <h1 className="text-4xl font-extrabold text-gray-900 mb-8 text-center">{product.productName}</h1>
                 
                 {/* Image Slider & Video Embed Section */}
@@ -73,7 +107,7 @@ const ProductDetails = () => {
                         </Swiper>
                     </div>
 
-                    {/* B. Video Embed (Right Side) */}
+                   
                     <div className="lg:col-span-1 h-96">
                         {videoSrc ? (
                             <iframe 
@@ -93,7 +127,7 @@ const ProductDetails = () => {
                     </div>
                 </div>
 
-                {/* Product Information Table */}
+              
                 <div className="p-8 bg-white rounded-xl shadow-xl border border-gray-100">
                     <h3 className="text-2xl font-bold mb-6 border-b pb-2 text-indigo-700">Product Specifications</h3>
                     <div className="space-y-4">
@@ -103,13 +137,26 @@ const ProductDetails = () => {
                             <DetailRow label="Price" value={`$${product.price}`} highlight />
                             <DetailRow label="Available Quantity" value={product.availableQuantity} />
                             <DetailRow label="Minimum Order Quantity" value={product.minOrderQuantity} />
-                            {/* <DetailRow label="Payment Option" value={product.paymentOption} />
-                             */}
+                            
                             <DetailRow label="manager Name" value={product.managerName} />
                             <DetailRow label="manager Email" value={product.managerEmail} />
 
                             <DetailRow label="Show on Home" value={product.showOnHome ? 'Yes' : 'No'} />
-                            <DetailRow label="Added On" value={new Date(product.createdAt).toLocaleDateString()} />
+                            
+                           
+                            <DetailRow 
+                                label="Added On" 
+                                value={formatLocalBDTTime(product.createdAt)} 
+                            />
+                            
+                            
+                            {product.lastUpdated && (
+                                <DetailRow 
+                                    label="Last Updated" 
+                                    value={formatLocalBDTTime(product.lastUpdated)} 
+                                />
+                            )}
+
                             {product.managerPhoto && (
                                 <div className="flex flex-col col-span-1">
                                     <span className="font-semibold text-gray-600">manager Photo:</span>
@@ -122,13 +169,13 @@ const ProductDetails = () => {
                                     </div>
                                 </div>
                             )}
-                           
+                            
                         </div>
                     </div>
                 </div>
 {/* two buttons */}
                 <div className="flex flex-col md:flex-row gap-4 mt-8 justify-center max-w-xl mx-auto">
-                    <button 
+                    {/* <button 
                         className="
                             flex-1 px-6 py-3 text-lg font-bold 
                             rounded-lg shadow-xl transition duration-300
@@ -137,11 +184,11 @@ const ProductDetails = () => {
                         "
                         disabled
                     >
-                       {product.paymentOption}
-                    </button>
+                        {product.paymentOption}
+                    </button> */}
                     <Link
                         to={`/book-order/${id}`}
-                      state={{ 
+                    state={{ 
         productId: id,
         productName: product.productName,
         price: product.price,
@@ -155,14 +202,16 @@ const ProductDetails = () => {
     className="flex-1"
                     >
                         <button 
-                            className="
-                                w-full px-6 py-3 text-lg font-bold 
-                                rounded-lg shadow-xl transition duration-300
-                                bg-green-600 text-white 
-                                hover:bg-green-700 active:bg-green-800
-                            "
+                           className="
+                text-black bg-gradient-to-r from-purple-300 via-cyan-200 to-teal-300
+                px-6 sm:px-2 py-2 sm:py-3.5 
+                rounded-xl 
+                font-medium shadow-lg transition-all duration-300
+                hover:shadow-xl hover:scale-[1.02] 
+                hover:from-purple-300 hover:via-cyan-300 hover:to-teal-400
+            "
                         >
-                         order:   {product.productName} 
+                           order:  {product.productName} 
                         </button>
                     </Link>
 
@@ -170,6 +219,8 @@ const ProductDetails = () => {
 
 
             </div>
+            <Footer></Footer>
+       </div>
     );
 };
 
@@ -182,13 +233,4 @@ const DetailRow = ({ label, value, highlight, fullWidth }) => (
 
 
 export default ProductDetails;
-
-
-
-
-
-
-
-
-
 

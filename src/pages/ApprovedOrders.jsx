@@ -7,6 +7,7 @@ import useAuth from '../hooks/useAuth';
 import useAxiosSecure from '../hooks/useAxiosSecure'; 
 import { format } from 'date-fns';
 import AddTrackingModal from '../modal/AddTrackingModal';
+import { Helmet } from 'react-helmet-async';
 
 const ApprovedOrders = () => {
     const { user } = useAuth();
@@ -45,7 +46,14 @@ const ApprovedOrders = () => {
 
     
     return (
-        <div className="p-4 sm:p-6 lg:p-8 bg-gray-50 min-h-screen">
+       <div>
+        <Helmet>
+                <title>
+                    approved orders
+                </title>
+            </Helmet>
+
+         <div className="p-4 sm:p-6 lg:p-8 bg-gray-50 min-h-screen">
             <h2 className="text-3xl font-bold mb-8 text-green-700 border-b pb-2">Approved Orders</h2>
             <p className="mb-6 text-gray-600"> Start to update tracking </p>
             
@@ -94,7 +102,14 @@ const ApprovedOrders = () => {
                                       
                                         <button
                                             onClick={() => handleAddTracking(order)}
-                                            className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                          className="
+                text-black bg-gradient-to-r from-purple-300 via-cyan-200 to-teal-300
+                px-6 sm:px-2 py-2 sm:py-3.5 
+                rounded-xl 
+                font-medium shadow-lg transition-all duration-300
+                hover:shadow-xl hover:scale-[1.02] 
+                hover:from-purple-300 hover:via-cyan-300 hover:to-teal-400
+            "
                                             title=" Add tracking"
                                         >
                                             <Truck className="w-4 h-4 mr-1"/> Add tracking status
@@ -117,7 +132,7 @@ const ApprovedOrders = () => {
                 </div>
             )}
             
-            {/* ⭐ মোডাল কম্পোনেন্ট কল করা */}
+            
             {selectedOrder && (
                 <AddTrackingModal
                     isOpen={isModalOpen}
@@ -127,6 +142,7 @@ const ApprovedOrders = () => {
                 />
             )}
         </div>
+       </div>
     );
 };
 

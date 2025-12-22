@@ -1,12 +1,11 @@
 
-
-
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams, useLocation, useNavigate } from 'react-router'; 
 import Swal from 'sweetalert2'; 
 import useAuth from '../hooks/useAuth';
 import useAxiosSecure from '../hooks/useAxiosSecure';
+import { Helmet } from 'react-helmet-async';
 
 const splitName = (displayName) => {
     if (!displayName) return { firstName: '', lastName: '' };
@@ -27,10 +26,8 @@ const InputField = ({ label, value, readOnly, highlight, className = '' }) => (
         />
     </div>
 );
-
-// 📸 নতুন কম্পোনেন্ট: ম্যানেজারের ছবি দেখানোর জন্য
 const ManagerPhotoField = ({ label, photoUrl, managerName }) => {
-    if (!photoUrl) return null; // যদি URL না থাকে, তবে কিছুই দেখাবে না
+    if (!photoUrl) return null; 
 
     return (
         <div className="flex flex-col">
@@ -39,7 +36,7 @@ const ManagerPhotoField = ({ label, photoUrl, managerName }) => {
                 <img 
                     src={photoUrl} 
                     alt={managerName || "Manager Photo"} 
-                    // ছোট সাইজের জন্য w-12 h-12 এবং rounded-full ব্যবহার করা হয়েছে
+                    
                     className="w-12 h-12 rounded-full object-cover border-2 border-indigo-500 shadow-md"
                     loading="lazy"
                 />
@@ -96,7 +93,7 @@ const BookingForm = () => {
     });
 
     if (!productData || !user) {
-        return <p className="text-center text-red-500 py-20">ডেটা লোডিং এ সমস্যা অথবা ইউজার লগইন করা নেই।</p>;
+        return <p className="text-center text-red-500 py-20"> Facing problem to load data </p>;
     }
     
     const quantity = watch('orderQuantity');
@@ -164,7 +161,15 @@ const BookingForm = () => {
     };
 
     return (
-        <div className="container mx-auto p-6 pt-10">
+        <div>
+<Helmet>
+                <title>
+                    Booking Form
+                </title>
+            </Helmet>
+
+
+            <div className="container mx-auto p-6 pt-10">
             <h2 className="text-3xl font-extrabold mb-8 text-center text-gray-800">
                 <span className="text-green-600">Order Booking:</span> {productData.productName}
             </h2>
@@ -238,7 +243,14 @@ const BookingForm = () => {
                 </div>
 
 
-                <button type="submit" className="w-full bg-green-600 text-white font-bold py-3 rounded-lg hover:bg-green-700 transition duration-300 shadow-lg">
+                <button type="submit" className="
+                text-black bg-gradient-to-r from-purple-300 via-cyan-200 to-teal-300
+                px-6 sm:px-2 py-2 sm:py-3.5 
+                rounded-xl 
+                font-medium shadow-lg transition-all duration-300
+                hover:shadow-xl hover:scale-[1.02] 
+                hover:from-purple-300 hover:via-cyan-300 hover:to-teal-400
+            ">
                     {productData.paymentOption === 'Cash on Delivery' ? 
                         `Confirm Order (Pay on Delivery)` : 
                         `Proceed to Payment ($${calculatedPrice})`
@@ -247,7 +259,9 @@ const BookingForm = () => {
 
             </form>
         </div>
+        </div>
     );
 };
 
 export default BookingForm;
+

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router'; 
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../hooks/useAxiosSecure';
+import { Helmet } from 'react-helmet-async';
 
 
 const DetailItem = ({ label, value, highlight, status }) => {
@@ -23,20 +24,22 @@ const DetailItem = ({ label, value, highlight, status }) => {
     );
 }
 
+
 const formatDate = (dateString) => {
     if (!dateString) return 'N/A';
     try {
         const date = new Date(dateString);
-        return date.toLocaleDateString('bn-BD', {
+        return date.toLocaleDateString('en-GB', {
             year: 'numeric',
             month: 'short',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
+            day: '2-digit', 
+            hour: '2-digit', 
+            minute: '2-digit', 
             hour12: true 
-        }).replace(',', ', ');
-    } catch (_e) { 
-        console.log(_e)
+        });
+        
+    } catch (e) { 
+        console.error("Date formatting error:", e); 
         return 'Invalid Date';
     }
 };
@@ -112,7 +115,14 @@ const OrderDetails = () => {
     };
 
     return (
-        <div className="p-4 sm:p-6 lg:p-8">
+       <div>
+        <Helmet>
+                <title>
+                    order details
+                </title>
+            </Helmet>
+
+         <div className="p-4 sm:p-6 lg:p-8">
             <h1 className="text-3xl font-bold mb-8 text-gray-800"> Order details: <span className="text-indigo-600">{orderData.trackingId}</span></h1>
             
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -175,6 +185,7 @@ const OrderDetails = () => {
                 </div>
             </div>
         </div>
+       </div>
     );
 };
 

@@ -1,9 +1,13 @@
 
+
+
 import React, { useEffect, useState } from 'react';
 import useAuth from '../hooks/useAuth';
 import Swal from 'sweetalert2'; 
 import { Link } from 'react-router'; 
 import useAxiosSecure from '../hooks/useAxiosSecure';
+import { Helmet } from 'react-helmet-async';
+
 
 const formatDate = (dateString) => {
     if (!dateString) return 'N/A';
@@ -21,8 +25,8 @@ const MyOrders = () => {
         if (user?.email) {
             setIsLoading(true);
             
-           
             axiosSecure.get(`/orders/${user.email}`) 
+           
                 .then(res => {
                     setOrders(res.data);
                     setIsLoading(false);
@@ -44,60 +48,66 @@ const MyOrders = () => {
     
     const handleCancel = (orderId, trackingId) => {
         Swal.fire({
-            title: " Are you sure",
-            text: " Couldn't find order if canceled!",
+            title: " Are you sure?",
+            text: " Won't recover it anymore after canceling!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#d33",
             cancelButtonColor: "#3085d6",
-            confirmButtonText: "cancel!"
+            confirmButtonText: " Yeah I want to cancel!"
         }).then((result) => {
             if (result.isConfirmed) {
-               
                 axiosSecure.patch(`/orders/cancel/${orderId}`)
                     .then(res => {
                         if (res.data.success) {
                             Swal.fire(
-                                'cancelled',
-                                `order ${trackingId} Successfully canceled`,
+                                'canceled!',
+                                `order ${trackingId} Has been cancelled successfully`,
                                 'success'
                             );
                             fetchOrders(); 
                         } else {
                             Swal.fire(
-                                'failed!',
-                                res.data.message || ` ${trackingId} Failed to cancel`,
+                                'failed',
+                                res.data.message || `order ${trackingId} Could not cancel`,
                                 'error'
                             );
                         }
                     })
                     .catch(error => {
                         console.error("Cancellation Error:", error);
-                        Swal.fire('Error', ' Server problem to remove the order', 'error');
+                        Swal.fire('Error', ' Server error to cancel order', 'error');
                     });
             }
         });
     };
     
     if (!user) {
-        return <p className="text-center py-10 text-red-500"> Need to be user to see order </p>
+        return <p className="text-center py-10 text-red-500"> Login please </p>
     }
     if (isLoading) {
-        return <p className="text-center py-10 text-indigo-600"> Order is loading </p>;
+        return <p className="text-center py-10 text-indigo-600"> Order is loading</p>;
     }
     if (orders.length === 0) {
-        return <p className="text-center py-10 text-gray-500"> Didn't make ordere yet </p>;
+        return <p className="text-center py-10 text-gray-500"> Any order yet </p>;
     }
 
     return (
-        <div className="p-4 sm:p-6 lg:p-8">
+       <div>
+        <Helmet>
+                <title>
+                    my-orders
+                </title>
+            </Helmet>
+
+         <div className="p-4 sm:p-6 lg:p-8">
             <h1 className="text-3xl font-bold mb-6 text-gray-800">my orders</h1>
             
             <div className="overflow-x-auto bg-white rounded-xl shadow-lg">
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
                         <tr>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TRACKING ID</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">product</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">quantity</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">status</th>
@@ -109,7 +119,9 @@ const MyOrders = () => {
                     <tbody className="bg-white divide-y divide-gray-200">
                         {orders.map((order) => (
                             <tr key={order._id}>
+                               
                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-indigo-600">{order.trackingId}</td>
+                                
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{order.productTitle}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{order.orderQuantity}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">
@@ -118,7 +130,7 @@ const MyOrders = () => {
                                         (order.currentTrackingStatus || order.status) === 'Cancelled' ? 'bg-red-100 text-red-800' : 
                                         (order.currentTrackingStatus || order.status) === 'Delivered' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
                                     }`}>
-                                        {order.currentTrackingStatus || order.status} 
+                                        {order.currentTrackingStatus || order.status}
                                     </span>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
@@ -127,21 +139,50 @@ const MyOrders = () => {
                                     </span>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{formatDate(order.createdAt)}</td> 
-                                <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                                   
+                                <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-2">
+                                    
+                                 
                                     <Link to={`/dashboard/order-details/${order._id}`} state={{ orderData: order }}>
-                                        <button className="text-indigo-600 hover:text-indigo-900 px-2">
-                                           details
+                                        <button className="
+                text-black bg-gradient-to-r from-purple-300 via-cyan-200 to-teal-300
+                px-6 sm:px-2 py-2 sm:py-3.5 
+                rounded-xl 
+                font-medium shadow-lg transition-all duration-300
+                hover:shadow-xl hover:scale-[1.02] 
+                hover:from-purple-300 hover:via-cyan-300 hover:to-teal-400
+            ">
+                                            details
                                         </button>
                                     </Link>
                                     
-                                   
+                                    
+                                    <Link to={`/dashboard/track-order/${order.trackingId}`}>
+                                        <button className="
+                text-black bg-gradient-to-r from-purple-300 via-cyan-200 to-teal-300
+                px-6 sm:px-2 py-2 sm:py-3.5 
+                rounded-xl 
+                font-medium shadow-lg transition-all duration-300
+                hover:shadow-xl hover:scale-[1.02] 
+                hover:from-purple-300 hover:via-cyan-300 hover:to-teal-400
+            ">
+                                          see  tracking log
+                                        </button>
+                                    </Link>
+                                    
+                                  
                                     {order.status === 'Pending' && (
                                         <button 
                                             onClick={() => handleCancel(order._id, order.trackingId)}
-                                            className="text-red-600 hover:text-red-900 ml-4 px-2"
+                                            className="
+                text-black bg-gradient-to-r from-purple-300 via-cyan-200 to-teal-300
+                px-6 sm:px-2 py-2 sm:py-3.5 
+                rounded-xl 
+                font-medium shadow-lg transition-all duration-300
+                hover:shadow-xl hover:scale-[1.02] 
+                hover:from-purple-300 hover:via-cyan-300 hover:to-teal-400
+            "
                                         >
-                                           cancel
+                                            cancel
                                         </button>
                                     )}
                                 </td>
@@ -151,7 +192,13 @@ const MyOrders = () => {
                 </table>
             </div>
         </div>
+       </div>
     );
 };
 
 export default MyOrders;
+
+
+
+
+

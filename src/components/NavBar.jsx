@@ -1,102 +1,4 @@
 
-// import React from 'react';
-
-// import { Link, NavLink } from 'react-router';
-// import useAuth from '../hooks/useAuth';
-
-
-
-// const NavBar = () => {
-
-//     const { user, logOut } = useAuth();
-
-//     const handleLogOut = () => {
-//         logOut()
-//             .then()
-//             .catch(error => {
-//                 console.log(error)
-//             })
-//     }
-
-//     const links = <>
-//         <li><NavLink to="/">Home</NavLink></li>
-//         <li><NavLink to="/products">Products</NavLink></li>
-//            {
-//             !user && <>
-//             <li>
-//                         <NavLink
-//                           to="/quick/about"
-//                           className="hover:text-indigo-400 transition"
-//                         >
-//                           About Us
-//                         </NavLink>
-//                       </li>
-//                       <li>
-//                         <NavLink
-//                           to="/quick/contact"
-//                           className="hover:text-indigo-400 transition"
-//                         >
-//                           Contact Us
-//                         </NavLink>
-//                       </li>
-//             </>
-//            }
-
-//         {
-//             user && <>
-                
-//                 <li><NavLink to="/dashboard">Dashboard</NavLink></li>
-//                   <li>
-//                                                     <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Assigned Deliveries" to="/dashboard/my-profile">
-                                                      
-//                                                         <span className="is-drawer-close:hidden">User Avatar</span>
-//                                                     </NavLink>
-//                                                 </li>
-//             </>
-//         }
-        
-
-//     </>
-//     return (
-//         <div className="navbar bg-base-100 shadow-sm">
-//             <div className="navbar-start">
-//                 <div className="dropdown">
-//                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-//                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
-//                     </div>
-//                     <ul
-//                         tabIndex="-1"
-//                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-//                         {links}
-//                     </ul>
-//                 </div>
-//                 <span className="btn btn-ghost text-xl">
-//                     StitchFlow Tracker
-//                 </span>
-//             </div>
-//             <div className="navbar-center hidden lg:flex">
-//                 <ul className="menu menu-horizontal px-1">
-//                     {links}
-//                 </ul>
-//             </div>
-//             <div className="navbar-end">
-//                 {
-//                     user ?
-//                         <a onClick={handleLogOut} className="btn">Log Out</a>
-//                         :<>
-//                         <Link className='btn' to="/login">Log in</Link>
-//                          <Link className='btn' to="/register">Register</Link>
-//                         </> 
-//                 }
-                
-//             </div>
-//         </div>
-//     );
-// };
-
-
-
-
 import React, { useState } from 'react';
 
 import { Link, NavLink, useNavigate } from 'react-router'; 
@@ -105,6 +7,7 @@ import useAuth from '../hooks/useAuth';
 
 
 import userImg from '../assets/user 1.png' 
+import Logo from './Logo';
 
 const NavBar = () => {
 
@@ -168,7 +71,7 @@ const NavBar = () => {
     </>
 
     return (
-        <div className="navbar bg-base-100 shadow-sm">
+        <div className="navbar bg-base-200 mb-10 shadow-sm">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -180,9 +83,14 @@ const NavBar = () => {
                         {links}
                     </ul>
                 </div>
+                <div className='flex  items-center'>
+                    
+<Logo></Logo>
+                
                 <span className="btn btn-ghost text-xl">
                     StitchFlow Tracker
                 </span>
+                </div>
             </div>
 
             <div className="navbar-center hidden lg:flex">
@@ -200,7 +108,14 @@ const NavBar = () => {
                         
                             <button 
                                 onClick={handleLogOut} 
-                                className="btn btn-sm btn-error text-white"
+                                 className="
+                text-black bg-gradient-to-r from-purple-300 via-cyan-200 to-teal-300
+                px-6 sm:px-8 py-3 sm:py-3.5 
+                rounded-xl 
+                font-medium shadow-lg transition-all duration-300
+                hover:shadow-xl hover:scale-[1.02] 
+                hover:from-purple-300 hover:via-cyan-300 hover:to-teal-400
+            "
                             >
                                 Log Out
                             </button>

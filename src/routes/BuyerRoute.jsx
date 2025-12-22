@@ -5,17 +5,17 @@ import useRole from '../hooks/useRole';
 import useAuth from '../hooks/useAuth';
 import Forbidden from '../components/Forbidden';
 
-const ManagerRoute = ({ children }) => {
+const BuyerRoute = ({ children }) => {
     const { user, loading } = useAuth();
-    
+   
     const { role, roleLoading } = useRole(); 
 
     if (loading || roleLoading) {
         return <progress className="progress w-56"></progress>; 
     }
+
     
-    
-    if (user && role === 'manager') { 
+    if (user && role === 'buyer') { 
         return children;
     }
 
@@ -23,4 +23,4 @@ const ManagerRoute = ({ children }) => {
     return <Forbidden></Forbidden>;
 };
 
-export default ManagerRoute;
+export default BuyerRoute;

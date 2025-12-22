@@ -34,6 +34,12 @@ import PaymentCancelled from "../pages/payments/PaymentCancelled";
 import OrderDetails from "../pages/OrderDetails";
 import UpdateProduct from "../pages/UpdateProduct";
 import PendingOrders from "../pages/PendingOrders";
+import BuyerRoute from "./BuyerRoute";
+import ManagerRoute from "./ManagerRoute";
+import AdminRoute from "./AdminRoute";
+import AdminOrManagerRoute from "./AdminOrManagerRoute";
+import BuyerOrManagerRoute from "./BuyerOrManagerRoute";
+import SuspendedActionGuard from "./SuspendedActionGuard";
 
 
 
@@ -64,7 +70,9 @@ export const router = createBrowserRouter([
   },
    {
     path: '/dashboard',
-    element: <DashboardLayout></DashboardLayout>,
+    element: <PrivateRoute>
+      <DashboardLayout></DashboardLayout>
+    </PrivateRoute>,
      children: [
       {
         index: true,
@@ -80,52 +88,81 @@ export const router = createBrowserRouter([
       }, 
     {
         path:'my-orders',
-        element:<MyOrders></MyOrders>
+        element:<BuyerRoute>
+          <MyOrders></MyOrders>
+        </BuyerRoute>
       },
         {
     path: "order-details/:id", 
-    element: <OrderDetails />,
+    element: <BuyerOrManagerRoute>
+      <OrderDetails />
+    </BuyerOrManagerRoute>,
 },
     {
-        path:'track-order',
-        element:<TrackOrder></TrackOrder>
+        path:'track-order/:trackingId',
+        element:<BuyerOrManagerRoute>
+          <TrackOrder></TrackOrder>
+        </BuyerOrManagerRoute>
       },
     {
         path:'my-profile',
-        element:<MyProfile></MyProfile>
+        element:<PrivateRoute>
+          <MyProfile></MyProfile>
+        </PrivateRoute>
       },
     {
         path:'all-products',
-        element:<AllProducts></AllProducts>
+        element:<AdminRoute>
+          <AllProducts></AllProducts>
+        </AdminRoute>
+        
       },
     {
         path:'add-product',
-        element:<AddProduct></AddProduct>
+        element:<ManagerRoute>
+          <SuspendedActionGuard>
+            <AddProduct></AddProduct>
+          </SuspendedActionGuard>
+        </ManagerRoute>
       },
     {
         path:'approved-orders',
-        element:<ApprovedOrders></ApprovedOrders>
+        element:<ManagerRoute>
+          <ApprovedOrders></ApprovedOrders>
+        </ManagerRoute>
       },
     {
         path:'all-orders',
-        element:<AllOrders></AllOrders>
+        element:<AdminRoute>
+          <AllOrders></AllOrders>
+        </AdminRoute>
       },
     {
         path:'pending-orders',
-        element:<PendingOrders></PendingOrders>
+        element:<ManagerRoute>
+          <SuspendedActionGuard>
+            <PendingOrders></PendingOrders>
+          </SuspendedActionGuard>
+        </ManagerRoute>
       },
   {
     path: 'manage-products',
-    element: <ManageProducts />, 
+    element: <ManagerRoute>
+      <ManageProducts />
+    </ManagerRoute>, 
     
 },
 {
     path: 'update-product/:id',
-    element: <UpdateProduct />, 
+    element: <AdminOrManagerRoute>
+      <UpdateProduct />
+    </AdminOrManagerRoute>, 
 },
     {
         path:'manage-users',
-        element:<ManageUsers></ManageUsers>
+        element:<AdminRoute>
+          <ManageUsers></ManageUsers>
+        </AdminRoute>
       }
 
     ]
@@ -148,10 +185,8 @@ export const router = createBrowserRouter([
     },
     {
         path: "/quick/terms",
-        // element: <Terms></Terms>
-        element: <PrivateRoute>
-          <Terms></Terms>
-        </PrivateRoute>
+        element: <Terms></Terms>
+       
     },
     {
         path: "/quick/privacy",
@@ -172,7 +207,13 @@ export const router = createBrowserRouter([
     {
 
       path:'/book-order/:id',
-      element: <BookingForm></BookingForm>
+      element: <PrivateRoute>
+        <BuyerRoute>
+          <SuspendedActionGuard>
+            <BookingForm></BookingForm>
+          </SuspendedActionGuard>
+        </BuyerRoute>
+      </PrivateRoute>
     },
   {
         path: '/*',

@@ -1,8 +1,16 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 
 const Contact = () => {
     return (
-        <div className="max-w-4xl mx-auto p-6">
+       <div>
+        <Helmet>
+                <title>
+                    contact-us
+                </title>
+            </Helmet>
+
+         <div className="max-w-4xl mx-auto p-6">
             <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
 
             <p className="text-gray-600 mb-4">
@@ -19,6 +27,7 @@ const Contact = () => {
                 Our support team is available Sunday to Thursday, 10:00 AM – 6:00 PM.
             </p>
         </div>
+       </div>
     );
 };
 

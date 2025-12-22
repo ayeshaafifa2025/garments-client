@@ -1,4 +1,4 @@
-
+ 
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router'; 
@@ -7,6 +7,7 @@ import useAxiosSecure from '../hooks/useAxiosSecure';
 import { FiEdit, FiTrash2, FiSearch } from 'react-icons/fi';
 import Swal from 'sweetalert2'; 
 import { toast } from 'react-toastify'; 
+import { Helmet } from 'react-helmet-async';
 
 
 const ManageProducts = () => {
@@ -87,7 +88,14 @@ const ManageProducts = () => {
 
 
     return (
-        <div className="p-4 sm:p-6 lg:p-8">
+        <div>
+            <Helmet>
+                <title>
+                    manage products
+                </title>
+            </Helmet>
+
+            <div className="p-4 sm:p-6 lg:p-8">
             <h1 className="text-3xl font-bold mb-6 text-gray-800 border-b pb-4">Manage My Products ({filteredProducts.length})</h1>
             
            
@@ -159,7 +167,14 @@ const ManageProducts = () => {
                                     <Link to={`/dashboard/update-product/${product._id}`}>
                                         <button 
                                             title="Edit Product"
-                                            className="text-blue-600 hover:text-blue-900 p-2 rounded-full hover:bg-blue-50 transition duration-150"
+                                            className="
+                text-black bg-gradient-to-r from-purple-300 via-cyan-200 to-teal-300
+                px-6 sm:px-2 py-2 sm:py-3.5 
+                rounded-xl 
+                font-medium shadow-lg transition-all duration-300
+                hover:shadow-xl hover:scale-[1.02] 
+                hover:from-purple-300 hover:via-cyan-300 hover:to-teal-400
+            "
                                         >
                                             <FiEdit className="h-5 w-5" />
                                         </button>
@@ -169,7 +184,14 @@ const ManageProducts = () => {
                                     <button 
                                         title="Delete Product"
                                         onClick={() => handleDeleteProduct(product._id, product.productName)}
-                                        className="text-red-600 hover:text-red-900 p-2 rounded-full hover:bg-red-50 transition duration-150"
+                                       className="
+                text-black bg-gradient-to-r from-purple-300 via-cyan-200 to-teal-300
+                px-6 sm:px-2 py-2 sm:py-3.5 
+                rounded-xl 
+                font-medium shadow-lg transition-all duration-300
+                hover:shadow-xl hover:scale-[1.02] 
+                hover:from-purple-300 hover:via-cyan-300 hover:to-teal-400
+            "
                                     >
                                         <FiTrash2 className="h-5 w-5" />
                                     </button>
@@ -185,6 +207,7 @@ const ManageProducts = () => {
                     </div>
                 )}
             </div>
+        </div>
         </div>
     );
 };
