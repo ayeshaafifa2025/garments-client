@@ -80,8 +80,8 @@ const PaymentSuccess = () => {
                 
               
                 
-                <p className="text-left py-1"><strong>Tracking ID:</strong> <span className="font-mono text-lg">{paymentInfo?.trackingId || 'N/A'}</span></p>
-                <p className="text-left py-1"><strong>Transaction ID:</strong> <span className="font-mono text-lg">{paymentInfo?.transactionId || 'N/A'}</span></p>
+                <p className="text-left text-black py-1"><strong>Tracking ID:</strong> <span className="font-mono text-black text-lg">{paymentInfo?.trackingId || 'N/A'}</span></p>
+                <p className="text-left text-black py-1"><strong>Transaction ID:</strong> <span className="font-mono text-black text-lg">{paymentInfo?.transactionId || 'N/A'}</span></p>
                 
                 <Link to="/dashboard/my-orders">
                     <button className="

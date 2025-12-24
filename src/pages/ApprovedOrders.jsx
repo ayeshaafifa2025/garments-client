@@ -1,6 +1,6 @@
 
 
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
 import { Truck, Eye } from 'lucide-react';
@@ -9,8 +9,10 @@ import useAxiosSecure from '../hooks/useAxiosSecure';
 import { format } from 'date-fns';
 import AddTrackingModal from '../modal/AddTrackingModal';
 import { Helmet } from 'react-helmet-async';
+import { ThemeContext } from '../contexts/ThemeProvider';
 
 const ApprovedOrders = () => {
+   const { theme, toggleTheme } = useContext(ThemeContext);
   const { user } = useAuth();
   const managerEmail = user?.email;
   const axiosSecure = useAxiosSecure();
@@ -63,7 +65,7 @@ const ApprovedOrders = () => {
     );
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-10 py-6">
+    <div className={`min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-10 py-6  ${theme === "light" ? "bg-white" : "bg-gray-600 "}` }>
       <Helmet>
         <title>approved orders</title>
       </Helmet>

@@ -14,9 +14,6 @@ const Home = () => {
            <Helmet>
                
                 <title>landing page</title> 
-               
-                
-                
             </Helmet>
 
             <div className=''>

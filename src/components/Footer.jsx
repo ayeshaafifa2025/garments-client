@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router";
+import { ThemeContext } from "../contexts/ThemeProvider";
 
 const Footer = () => {
+  const{theme,toggleTheme}= useContext(ThemeContext)
   return (
-    <footer className="bg-gradient-to-r from-teal-100 via-cyan-200 to-blue-50 text-black   mt-16">
+    <footer className={` text-black    ${theme === "light" ? "bg-gradient-to-r from-teal-100 via-cyan-200 to-blue-50" : "bg-gray-600 "}`}>
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-14">
 

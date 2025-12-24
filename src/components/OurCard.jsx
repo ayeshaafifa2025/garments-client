@@ -32,9 +32,9 @@ const OurCard = ({ product }) => {
             >
                 <img
                     className='
-                        object-cover 
-                        h-full 
-                        w-full 
+                        
+                        h-full
+                        w-full
                         group-hover:scale-110 
                         transition duration-500
                     '

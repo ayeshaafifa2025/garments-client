@@ -2,7 +2,7 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
 import useAuth from '../hooks/useAuth';
@@ -11,8 +11,10 @@ import { FiEdit, FiTrash2, FiSearch } from 'react-icons/fi';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import { Helmet } from 'react-helmet-async';
+import { ThemeContext } from '../contexts/ThemeProvider';
 
 const ManageProducts = () => {
+   const { theme, toggleTheme } = useContext(ThemeContext);
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
@@ -100,7 +102,7 @@ const ManageProducts = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-10 py-6">
+    <div className={`min-h-screen bg-gray-50 px-4  ${theme === "light" ? "bg-white" : "bg-gray-600 "} sm:px-6 lg:px-10 py-6`}>
       <Helmet>
         <title>manage products</title>
       </Helmet>
@@ -116,7 +118,7 @@ const ManageProducts = () => {
             placeholder="Search by Product Name..."
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+            className="w-full text-black pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
           />
           <FiSearch className="absolute left-3 top-3 text-gray-400" />
         </div>
@@ -124,7 +126,7 @@ const ManageProducts = () => {
         <select
           value={filterCategory}
           onChange={e => setFilterCategory(e.target.value)}
-          className="w-full md:w-56 px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+          className="w-full text-black md:w-56 px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
         >
           <option value="">All Categories</option>
           {allCategories.map(cat => (

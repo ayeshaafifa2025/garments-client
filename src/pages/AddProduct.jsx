@@ -1,15 +1,17 @@
 
 
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 
 import useAuth from '../hooks/useAuth';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import { Helmet } from 'react-helmet-async';
+import { ThemeContext } from '../contexts/ThemeProvider';
 
 const AddProduct = () => {
+   const { theme, toggleTheme } = useContext(ThemeContext);
   const { register, handleSubmit, reset } = useForm();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
@@ -56,7 +58,7 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-10 py-8">
+    <div className={`min-h-screen  ${theme === "light" ? "bg-white" : "bg-gray-600 "} px-4  sm:px-6 lg:px-10 py-8`}>
       <Helmet>
         <title>add-product</title>
       </Helmet>
@@ -100,6 +102,9 @@ const AddProduct = () => {
               <option value="Pant">Pant</option>
               <option value="Jacket">Jacket</option>
               <option value="Accessories">Accessories</option>
+              <option value="shari">shari</option>
+              <option value="panjabi">panjabi</option>
+              <option value="abaya">abaya</option>
             </select>
           </div>
 
@@ -110,6 +115,8 @@ const AddProduct = () => {
               {...register('price', { required: true })}
               className="input input-bordered w-full"
               placeholder="Price"
+               min="0.01" 
+        step="0.01"
             />
           </div>
 
@@ -120,6 +127,8 @@ const AddProduct = () => {
               {...register('availableQuantity', { required: true })}
               className="input input-bordered w-full"
               placeholder="Available Quantity"
+              min="1" 
+        step="1"
             />
           </div>
 
@@ -132,6 +141,8 @@ const AddProduct = () => {
               {...register('minOrderQuantity', { required: true })}
               className="input input-bordered w-full"
               placeholder="MOQ"
+               min="1" 
+        step="1"
             />
           </div>
 

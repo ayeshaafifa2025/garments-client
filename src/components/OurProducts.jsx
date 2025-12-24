@@ -3,8 +3,11 @@
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import OurCard from './OurCard';
+import { useContext } from 'react';
+import { ThemeContext } from '../contexts/ThemeProvider';
 
 const OurProducts = () => {
+        const{theme,toggleTheme}= useContext(ThemeContext)
     const axiosSecure = useAxiosSecure();
 
     const { data: products = [], isLoading } = useQuery({
@@ -21,7 +24,7 @@ const OurProducts = () => {
     if (isLoading) return <p className="text-center py-20 text-xl font-semibold">Loading Products...</p>;
 
     return (
-    <section className="container mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+    <section className={`container mx-auto px-4 py-2 sm:px-6 lg:px-8 mb-5 ${theme === "light" ? "bg-gradient-to-r from-teal-200 via-cyan-200 to-blue-200" : "bg-gray-600 "}`}>
         <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 pt-10 pb-6">
             Our Products
         </h2>

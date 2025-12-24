@@ -1,15 +1,17 @@
 
 
 
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import useRole from '../hooks/useRole';
 import useAxiosSecure from '../hooks/useAxiosSecure';
+import { ThemeContext } from '../contexts/ThemeProvider';
 
 const UpdateProduct = () => {
+    const { theme, toggleTheme } = useContext(ThemeContext);
     const { id } = useParams();
     const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
@@ -68,13 +70,13 @@ const UpdateProduct = () => {
     if (isLoading) return <p className="text-center py-10 text-indigo-600">Loading product data...</p>;
     if (isError || !product._id) return <p className="text-center py-10 text-red-600">Error loading product or product not found.</p>;
 
-    const categories = ['Jacket', 'Pant'];
+    const categories = ['Jacket', 'Pant','Shirt','Accessories','shari','panjabi','abaya'];
     const paymentOptions = ['PayFirst', 'Cash on Delivery'];
 
     return (
-        <div className="p-4 sm:p-6 lg:p-8 bg-gray-50 min-h-screen">
+        <div className={`p-4 sm:p-6 lg:p-8 bg-gray-50 min-h-screen ${theme === "light" ? "bg-white" : "bg-gray-600 "}`}>
             <h1 className="text-3xl font-bold mb-8 text-gray-800 border-b pb-4 text-center sm:text-left">Update Product: {product.productName}</h1>
-            <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-lg max-w-4xl mx-auto space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="bg-white text-black p-4 sm:p-6 lg:p-8 rounded-xl shadow-lg max-w-4xl mx-auto space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     <div>
                         <input type="text" {...register('productName', { required: 'Product name is required' })} placeholder="Product Name" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" />

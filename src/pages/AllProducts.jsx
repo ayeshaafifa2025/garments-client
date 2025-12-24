@@ -1,6 +1,6 @@
 
 
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router'; 
 import useAxiosSecure from '../hooks/useAxiosSecure'; 
@@ -8,8 +8,10 @@ import { FiEdit, FiTrash2, FiSearch } from 'react-icons/fi';
 import Swal from 'sweetalert2'; 
 import { toast } from 'react-toastify'; 
 import { Helmet } from 'react-helmet-async';
+import { ThemeContext } from '../contexts/ThemeProvider';
 
 const AllProducts = () => {
+      const { theme, toggleTheme } = useContext(ThemeContext);
     const axiosSecure = useAxiosSecure();
     const [searchTerm, setSearchTerm] = useState('');
     const [filterCategory, setFilterCategory] = useState('');
@@ -77,7 +79,7 @@ const AllProducts = () => {
     return (
         <div>
             <Helmet><title>all-products</title></Helmet>
-            <div className="p-4 sm:p-6 lg:p-8">
+            <div className={`p-4 sm:p-6 lg:p-8 ${theme === "light" ? "bg-white" : "bg-gray-600 "} `}>
                 <h1 className="text-3xl font-bold mb-6 text-gray-800 border-b pb-4">🛍️ All Products ({filteredProducts.length})</h1>
 
                 <div className="flex flex-col md:flex-row gap-4 mb-8 bg-gray-50 p-4 rounded-lg shadow-inner">
@@ -87,14 +89,14 @@ const AllProducts = () => {
                             placeholder="Search by Product Name..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                            className="w-full pl-10 pr-4 py-2 border border-gray-300 text-black rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
                         />
                         <FiSearch className="absolute left-3 top-3 text-gray-400" />
                     </div>
                     <select
                         value={filterCategory}
                         onChange={(e) => setFilterCategory(e.target.value)}
-                        className="w-full md:w-56 px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                        className="w-full md:w-56 px-4 py-2 text-black border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
                     >
                         <option value="">All Categories</option>
                         {allCategories.map(cat => <option key={cat} value={cat}>{cat}</option>)}

@@ -1,7 +1,7 @@
 
 
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   PieChart,
   Pie,
@@ -16,8 +16,10 @@ import {
   Cell
 } from 'recharts';
 import useAxiosSecure from '../hooks/useAxiosSecure';
+import { ThemeContext } from '../contexts/ThemeProvider';
 
 const AdminDashboardHome = () => {
+   const { theme, toggleTheme } = useContext(ThemeContext);
   const axiosSecure = useAxiosSecure();
 
   const { data: adminStats = {}, isLoading } = useQuery({
@@ -76,7 +78,7 @@ const AdminDashboardHome = () => {
   };
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 bg-gray-50 min-h-screen">
+    <div className={`p-4 sm:p-6 lg:p-8  min-h-screen ${theme === "light" ? "bg-white" : "bg-gray-600 "} `}>
       <h1 className="text-3xl sm:text-4xl font-extrabold mb-10 text-gray-800">
         📊 Admin Control Panel
       </h1>

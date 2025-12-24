@@ -103,6 +103,8 @@ const Login = () => {
 
                         <div className="form-control mt-4 sm:mt-6">
                             <button type="submit" className="
+                               w-full 
+                                
                                 text-black bg-gradient-to-r from-purple-300 via-cyan-200 to-teal-300
                                 px-6 py-2 sm:py-3.5 
                                 rounded-xl 

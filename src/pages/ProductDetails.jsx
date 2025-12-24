@@ -76,7 +76,7 @@ const ProductDetails = () => {
       </Helmet>
 
       <div className="flex-1 px-4 sm:px-6 lg:px-10 pt-6 pb-16 max-w-7xl mx-auto">
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-900 mb-8 text-center">
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-blue-600 mb-8 text-center">
           {product.productName}
         </h1>
 
@@ -95,7 +95,7 @@ const ProductDetails = () => {
                   <img
                     src={imgUrl}
                     alt={`${product.productName} ${index + 1}`}
-                    className="object-cover w-full h-full rounded-xl"
+                    className=" w-full h-full rounded-xl"
                     loading="lazy"
                   />
                 </SwiperSlide>
@@ -127,7 +127,7 @@ const ProductDetails = () => {
             Product Specifications
           </h3>
 
-          <div className="space-y-4">
+          <div className="space-y-4 text-black">
             <DetailRow
               label="Product Description"
               value={product.description}
@@ -157,10 +157,10 @@ const ProductDetails = () => {
                 label="Manager Email"
                 value={product.managerEmail}
               />
-              <DetailRow
+              {/* <DetailRow
                 label="Show on Home"
                 value={product.showOnHome ? 'Yes' : 'No'}
-              />
+              /> */}
               <DetailRow
                 label="Added On"
                 value={formatLocalBDTTime(product.createdAt)}

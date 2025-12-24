@@ -1,17 +1,19 @@
 
 
 
-import React from 'react';
+import React, { useContext } from 'react';
 import useAuth from '../hooks/useAuth';
 import { Link } from 'react-router';
+import { ThemeContext } from '../contexts/ThemeProvider';
 
 const UserDashboardHome = () => {
+  const { theme, toggleTheme } = useContext(ThemeContext);
   const { user } = useAuth();
 
   const userRole = 'General User';
 
   return (
-    <div className="p-4 sm:p-8 bg-gray-50 min-h-screen">
+    <div className={`p-4 sm:p-8  min-h-screen ${theme === "light" ? "bg-white" : "bg-gray-600 "} `}>
 
       {/* Header */}
       <header className="mb-10 text-center">
@@ -62,6 +64,11 @@ const UserDashboardHome = () => {
           )}
         </div>
       </div>
+      <div className='bg-white p-6 rounded-xl shadow-lg text-center  hover:shadow-xl transition flex flex-col items-center mb-5 hover:bg-indigo-50'>
+        <h1 className='text-purple-500 text-xl font-bold'>Our Recommandation</h1>
+        <p className='text-black text-2xl font-bold'> You  are new on the website . <br />if you need to order some products from us <br /> or need to be a manager to sell your products , <br /> then you have to go  our register page and <br /> select your desired role and complete registration. <br /> we will approve you in a short period of time <br /> to give your desired access </p>
+
+      </div>
 
       {/* Quick Links */}
       <div className="max-w-3xl mx-auto">
@@ -69,7 +76,7 @@ const UserDashboardHome = () => {
           Quick Navigation
         </h3>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <Link
             to="/"
             className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition flex flex-col items-center text-center hover:bg-indigo-50"
@@ -93,6 +100,18 @@ const UserDashboardHome = () => {
             </h4>
             <p className="text-sm text-gray-500">
               Browse available products
+            </p>
+          </Link>
+          <Link
+            to="/register"
+            className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition flex flex-col items-center text-center hover:bg-indigo-50"
+          >
+            <span className="text-4xl mb-3">🛍️</span>
+            <h4 className="font-bold text-lg text-gray-800">
+              Register now
+            </h4>
+            <p className="text-sm text-gray-500">
+              Be our Buyer or Manager
             </p>
           </Link>
         </div>

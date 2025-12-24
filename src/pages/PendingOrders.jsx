@@ -1,7 +1,7 @@
 
 
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { FiCheckCircle, FiXCircle, FiEye } from 'react-icons/fi';
 import { Link } from 'react-router';
@@ -10,6 +10,7 @@ import useAxiosSecure from '../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import { Helmet } from 'react-helmet-async';
+import { ThemeContext } from '../contexts/ThemeProvider';
 
 const formatOrderDate = dateString => {
   if (!dateString) return 'N/A';
@@ -25,6 +26,7 @@ const formatOrderDate = dateString => {
 };
 
 const PendingOrders = () => {
+   const { theme, toggleTheme } = useContext(ThemeContext);
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
@@ -105,7 +107,7 @@ const PendingOrders = () => {
     );
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-10 py-6">
+    <div className={`min-h-screen  ${theme === "light" ? "bg-white" : "bg-gray-600 "} px-4 sm:px-6 lg:px-10 py-6`}>
       <Helmet>
         <title>Pending orders</title>
       </Helmet>
@@ -139,10 +141,10 @@ const PendingOrders = () => {
             </tr>
           </thead>
 
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y  divide-gray-200">
             {pendingOrders.map(order => (
-              <tr key={order._id} className="hover:bg-gray-50">
-                <td className="px-4 py-3 text-sm font-semibold">
+              <tr key={order._id} className="  hover:bg-gray-50">
+                <td className="px-4 py-3 text-sm font-semibold text-red-600">
                   {order.trackingId || 'N/A'}
                 </td>
 

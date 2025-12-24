@@ -210,7 +210,7 @@ const BookingForm = () => {
 
                     <h3 className="text-lg sm:text-xl font-bold border-b pb-2 pt-4 sm:pt-6 text-indigo-700">Order & Delivery Details</h3>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-black sm:gap-4">
                         <QuantityField 
                             register={register} 
                             errors={errors}
@@ -218,20 +218,37 @@ const BookingForm = () => {
                             max={productData.availableQuantity}
                         />
 
-                        <div className="flex flex-col">
-                            <label className="text-xs sm:text-sm font-medium text-gray-600">Contact Number</label>
+                        {/* <div className="flex flex-col ">
+                            <label className="text-xs sm:text-sm font-medium ">Contact Number</label>
                             <input {...register("contactNumber", { required: "Contact Number is required" })} 
                                 placeholder="Your Contact Number" 
-                                className="border p-2 sm:p-3 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm" />
+                                className="border p-2 sm:p-3 rounded-lg text-black focus:ring-indigo-500 focus:border-indigo-500 text-sm" />
                             {errors.contactNumber && <p className="text-red-500 text-xs mt-1">{errors.contactNumber.message}</p>}
-                        </div>
+                        </div> */}
                     </div>
+                    <div className="flex flex-col ">
+    <label className="text-xs sm:text-sm font-medium ">Contact Number</label>
+    <input 
+        type="tel" 
+        {...register("contactNumber", { 
+            required: "Contact Number is required",
+
+            pattern: {
+                value: /^[0-9]{10,15}$/, 
+                message: "Contact Number must be 10 to 15 digits only"
+            }
+        })} 
+        placeholder="Your Contact Number (e.g., 0171XXXXXXXXX)" 
+        className="border p-2 sm:p-3 rounded-lg text-black focus:ring-indigo-500 focus:border-indigo-500 text-sm" 
+    />
+    {errors.contactNumber && <p className="text-red-500 text-xs mt-1">{errors.contactNumber.message}</p>}
+</div>
 
                     <div className="flex flex-col">
                         <label className="text-xs sm:text-sm font-medium text-gray-600">Delivery Address</label>
                         <textarea {...register("deliveryAddress", { required: "Delivery Address is required" })} 
                             placeholder="Your full delivery address" rows="2" 
-                            className="w-full border p-2 sm:p-3 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm" />
+                            className="w-full border text-black p-2 sm:p-3 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm" />
                         {errors.deliveryAddress && <p className="text-red-500 text-xs mt-1">{errors.deliveryAddress.message}</p>}
                     </div>
 
@@ -239,7 +256,7 @@ const BookingForm = () => {
                         <label className="text-xs sm:text-sm font-medium text-gray-600">Additional Notes / Instructions</label>
                         <textarea {...register("additionalNotes")} 
                             placeholder="e.g., Delivery instructions, preferred time (Optional)" rows="2" 
-                            className="w-full border p-2 sm:p-3 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm" />
+                            className="w-full border text-black p-2 sm:p-3 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm" />
                     </div>
 
 

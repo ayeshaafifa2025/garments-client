@@ -1,12 +1,14 @@
 
 
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useParams } from 'react-router'; 
 import useAxiosSecure from '../hooks/useAxiosSecure'; 
 import { Helmet } from 'react-helmet-async';
+import { ThemeContext } from '../contexts/ThemeProvider';
 
 const TrackOrder = () => {
+     const { theme, toggleTheme } = useContext(ThemeContext);
     const { trackingId } = useParams();
     const axiosSecure = useAxiosSecure(); 
     const { data: trackings = [], isLoading, error } = useQuery({
@@ -25,11 +27,11 @@ const TrackOrder = () => {
         return <div className='p-8 text-center text-xl font-semibold text-red-500'> Failed to load tracking log: {error.message}</div>;
     }
     if (trackings.length === 0) {
-        return <div className='p-8 text-center text-xl font-semibold text-gray-500'> Didn't find any tracking log for this order ID: <span className='font-bold text-gray-800'>{trackingId}</span></div>;
+        return <div className='p-8 text-center text-xl font-semibold text-gray-500'> Didn't find any tracking log for this order ID,<br /> go to my-orders page. and click on Track order button <span className='font-bold text-gray-800'>{trackingId}</span></div>;
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className={`min-h-screen  ${theme === "light" ? "bg-white" : "bg-gray-600 "}`}>
             <Helmet>
                 <title>
                     Track Order

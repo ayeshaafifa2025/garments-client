@@ -1,13 +1,9 @@
 
-
 import React, { useContext, useEffect, useState } from 'react';
-
 import { Link, NavLink, useNavigate } from 'react-router'; 
 import { toast } from 'react-toastify';
 import useAuth from '../hooks/useAuth';
-
-
-import userImg from '../assets/user 1.png'
+import userImg from '../assets/user 1.png';
 import Logo from './Logo';
 import { ThemeContext } from '../contexts/ThemeProvider';
 
@@ -15,7 +11,6 @@ const NavBar = () => {
 const { theme, toggleTheme } = useContext(ThemeContext);
     const { user, logOut } = useAuth();
     const navigate = useNavigate(); 
-    
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
       useEffect(() => {
@@ -80,8 +75,8 @@ const { theme, toggleTheme } = useContext(ThemeContext);
 
     return (
         // <div className="navbar bg-base-200 mb-10 shadow-md">
-        <div className={` relative flex mb-10 items-center justify-between px-4 py-4 shadow-md
-    ${theme === "light" ? "bg-base-50" : "bg-white"}`}>
+        <div className={` relative flex mb-5 items-center justify-between px-4 py-4 shadow-md
+    ${theme === "light" ? "bg-white" : "bg-gray-600 "}`}>
             <div className="navbar-start w-1/2 lg:w-auto">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn bg-black text-white btn-ghost lg:hidden">

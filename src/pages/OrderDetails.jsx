@@ -1,9 +1,10 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router'; 
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import { Helmet } from 'react-helmet-async';
+import { ThemeContext } from '../contexts/ThemeProvider';
 
 
 const DetailItem = ({ label, value, highlight, status }) => {
@@ -45,6 +46,7 @@ const formatDate = (dateString) => {
 };
 
 const OrderDetails = () => {
+     const { theme, toggleTheme } = useContext(ThemeContext);
     const location = useLocation();
     const { id } = useParams();
     const axiosSecure = useAxiosSecure();
@@ -122,7 +124,7 @@ const OrderDetails = () => {
                 </title>
             </Helmet>
 
-         <div className="p-4 sm:p-6 lg:p-8">
+         <div className={`p-4 sm:p-6 lg:p-8  ${theme === "light" ? "bg-white" : "bg-gray-600 "}`}>
             <h1 className="text-3xl font-bold mb-8 text-gray-800"> Order details: <span className="text-indigo-600">{orderData.trackingId}</span></h1>
             
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

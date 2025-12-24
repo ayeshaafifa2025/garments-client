@@ -33,8 +33,8 @@ const ProductsCard = ({ product }) => {
                 >
                     <img
                         className='
-                            object-cover 
-                            h-80
+                            
+                            h-full
                             w-full 
                             group-hover:scale-110 
                             transition

@@ -1,6 +1,6 @@
 
 
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
 import { FiCheckCircle, FiXCircle, FiEye } from 'react-icons/fi';
@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import { format } from 'date-fns';
 import AddTrackingModal from '../modal/AddTrackingModal';
 import { Helmet } from 'react-helmet-async';
+import { ThemeContext } from '../contexts/ThemeProvider';
 
 const formatOrderDate = (dateString) => {
     if (!dateString) return 'N/A';
@@ -48,7 +49,7 @@ const getStatusClasses = (status) => {
 const AllOrders = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
-    
+       const { theme, toggleTheme } = useContext(ThemeContext);
     const [statusFilter, setStatusFilter] = useState(''); 
     const [searchQuery, setSearchQuery] = useState(''); 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -81,40 +82,40 @@ const AllOrders = () => {
         },
     });
 
-    const handleUpdateStatus = (orderId, action) => { 
-        const newStatus = action === 'approve' ? 'Approved' : 'Rejected';
-        const actionTitle = action === 'approve' ? 'Approve' : 'Reject';
-        const actionColor = action === 'approve' ? '#22c55e' : '#ef4444';
+    // const handleUpdateStatus = (orderId, action) => { 
+    //     const newStatus = action === 'approve' ? 'Approved' : 'Rejected';
+    //     const actionTitle = action === 'approve' ? 'Approve' : 'Reject';
+    //     const actionColor = action === 'approve' ? '#22c55e' : '#ef4444';
 
-        Swal.fire({
-            title: `Confirm ${actionTitle}?`,
-            text: `Are you sure you want to change the status to ${newStatus}?`,
-            icon: action === 'approve' ? 'question' : 'warning',
-            showCancelButton: true,
-            confirmButtonColor: actionColor,
-            cancelButtonColor: '#6b7280',
-            confirmButtonText: `Yes, ${actionTitle} it!`
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                try {
-                    const res = await axiosSecure.patch(`/orders/${orderId}/status`, { newStatus }); 
-                    if (res.data.success) {
-                        toast.success(`Order successfully ${action}d! Status: ${newStatus}`);
-                        refetch(); 
-                    } else if (res.data.message) {
-                        toast.error(res.data.message);
-                    }
-                } catch {
-                    toast.error(`Failed to ${action} order. Check network and console.`);
-                }
-            }
-        });
-    };
+    //     Swal.fire({
+    //         title: `Confirm ${actionTitle}?`,
+    //         text: `Are you sure you want to change the status to ${newStatus}?`,
+    //         icon: action === 'approve' ? 'question' : 'warning',
+    //         showCancelButton: true,
+    //         confirmButtonColor: actionColor,
+    //         cancelButtonColor: '#6b7280',
+    //         confirmButtonText: `Yes, ${actionTitle} it!`
+    //     }).then(async (result) => {
+    //         if (result.isConfirmed) {
+    //             try {
+    //                 const res = await axiosSecure.patch(`/orders/${orderId}/status`, { newStatus }); 
+    //                 if (res.data.success) {
+    //                     toast.success(`Order successfully ${action}d! Status: ${newStatus}`);
+    //                     refetch(); 
+    //                 } else if (res.data.message) {
+    //                     toast.error(res.data.message);
+    //                 }
+    //             } catch {
+    //                 toast.error(`Failed to ${action} order. Check network and console.`);
+    //             }
+    //         }
+    //     });
+    // };
 
-    const handleAddTracking = (order) => {
-        setSelectedOrder(order);
-        setIsModalOpen(true);
-    };
+    // const handleAddTracking = (order) => {
+    //     setSelectedOrder(order);
+    //     setIsModalOpen(true);
+    // };
 
     const filteredOrders = allOrders.filter(order => 
         order.productTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -130,7 +131,7 @@ const AllOrders = () => {
             <Helmet>
                 <title>all-orders</title>
             </Helmet>
-            <div className="p-4 sm:p-6 lg:p-8">
+            <div className= {`p-4 sm:p-6 lg:p-8 ${theme === "light" ? "bg-white" : "bg-gray-600 "}`}>
                 <h1 className="text-3xl font-bold mb-6 text-gray-800 border-b pb-4">
                     📋 all orders: ({allOrders.length})
                 </h1>
@@ -142,7 +143,7 @@ const AllOrders = () => {
                             name="statusFilter"
                             value={statusFilter}
                             onChange={(e) => setStatusFilter(e.target.value)}
-                            className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                            className="mt-1 block w-full pl-3 pr-10 py-2  text-black border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                         >
                             <option value="">All status</option>
                             {availableStatuses.map(status => <option key={status} value={status}>{status}</option>)}
@@ -158,7 +159,7 @@ const AllOrders = () => {
                                 type="text"
                                 name="search"
                                 id="search"
-                                className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 pr-4 py-2 sm:text-sm border-gray-300 rounded-md"
+                                className="focus:ring-indigo-500 focus:border-indigo-500 text-black block w-full pl-10 pr-4 py-2 sm:text-sm border-gray-300 rounded-md"
                                 placeholder="Search by ID, product or email..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -176,11 +177,15 @@ const AllOrders = () => {
                             <thead className="bg-indigo-50">
                                 <tr>
                                     <th className="px-4 py-3 text-left text-xs font-bold text-indigo-700 uppercase tracking-wider">Order ID</th>
-                                    <th className="px-4 py-3 text-left text-xs font-bold text-indigo-700 uppercase tracking-wider hidden sm:table-cell">Buyer</th>
-                                    <th className="px-4 py-3 text-left text-xs font-bold text-indigo-700 uppercase tracking-wider hidden md:table-cell">Product</th>
-                                    <th className="px-4 py-3 text-left text-xs font-bold text-indigo-700 uppercase tracking-wider hidden lg:table-cell">Quantity</th>
+                                    {/* 'hidden sm:table-cell' removed */}
+                                    <th className="px-4 py-3 text-left text-xs font-bold text-indigo-700 uppercase tracking-wider">Buyer</th>
+                                    {/* 'hidden md:table-cell' removed */}
+                                    <th className="px-4 py-3 text-left text-xs font-bold text-indigo-700 uppercase tracking-wider">Product</th>
+                                    {/* 'hidden lg:table-cell' removed */}
+                                    <th className="px-4 py-3 text-left text-xs font-bold text-indigo-700 uppercase tracking-wider">Quantity</th>
                                     <th className="px-4 py-3 text-left text-xs font-bold text-indigo-700 uppercase tracking-wider">Status</th>
-                                    <th className="px-4 py-3 text-left text-xs font-bold text-indigo-700 uppercase tracking-wider hidden md:table-cell">Order Date</th>
+                                    {/* 'hidden md:table-cell' removed */}
+                                    <th className="px-4 py-3 text-left text-xs font-bold text-indigo-700 uppercase tracking-wider">Order Date</th>
                                     <th className="px-4 py-3 text-center text-xs font-bold text-indigo-700 uppercase tracking-wider">Actions</th>
                                 </tr>
                             </thead>
@@ -188,13 +193,17 @@ const AllOrders = () => {
                                 {filteredOrders.map((order) => (
                                     <tr key={order._id} className="hover:bg-gray-50">
                                         <td className="px-4 py-3 whitespace-nowrap text-sm font-semibold text-indigo-600">{order.trackingId || 'N/A'}</td>
-                                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500 hidden sm:table-cell">{order.firstName} {order.lastName}<br/><span className="text-xs text-gray-400">{order.buyerEmail}</span></td>
-                                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700 font-medium hidden md:table-cell">{order.productTitle}</td>
-                                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500 hidden lg:table-cell">{order.orderQuantity}</td>
+                                        {/* 'hidden sm:table-cell' removed */}
+                                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">{order.firstName} {order.lastName}<br/><span className="text-xs text-gray-400">{order.buyerEmail}</span></td>
+                                        {/* 'hidden md:table-cell' removed */}
+                                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700 font-medium">{order.productTitle}</td>
+                                        {/* 'hidden lg:table-cell' removed */}
+                                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">{order.orderQuantity}</td>
                                         <td className="px-4 py-3 whitespace-nowrap text-sm font-medium"><span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusClasses(order.currentTrackingStatus || order.status)}`}>{order.currentTrackingStatus || order.status}</span></td>
-                                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500 hidden md:table-cell">{formatOrderDate(order.createdAt)}</td>
+                                        {/* 'hidden md:table-cell' removed */}
+                                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">{formatOrderDate(order.createdAt)}</td>
                                         <td className="px-4 py-3 whitespace-nowrap text-center text-sm font-medium space-x-1 sm:space-x-2 flex flex-wrap justify-center">
-                                            {(order.status === 'Pending') && (
+                                            {/* {(order.status === 'Pending') && (
                                                 <>
                                                     <button title="Approve Order" onClick={() => handleUpdateStatus(order._id, 'approve')} className="text-black bg-gradient-to-r from-green-300 via-green-200 to-green-400 px-2 py-1 rounded-md font-medium shadow-sm hover:scale-105 transition duration-200 flex items-center"><FiCheckCircle className="h-5 w-5 mr-1"/>Approve</button>
                                                     <button title="Reject Order" onClick={() => handleUpdateStatus(order._id, 'reject')} className="text-black bg-gradient-to-r from-red-300 via-red-200 to-red-400 px-2 py-1 rounded-md font-medium shadow-sm hover:scale-105 transition duration-200 flex items-center"><FiXCircle className="h-5 w-5 mr-1"/>Reject</button>
@@ -202,7 +211,7 @@ const AllOrders = () => {
                                             )}
                                             {order.status !== 'Rejected' && order.status !== 'Cancelled' && (
                                                 <button onClick={() => handleAddTracking(order)} className="text-black bg-gradient-to-r from-purple-300 via-cyan-200 to-teal-300 px-2 py-1 rounded-md font-medium shadow-sm hover:scale-105 transition duration-200 flex items-center" title="Update Tracking Status"><Truck className="w-4 h-4 mr-1"/>Tracking</button>
-                                            )}
+                                            )} */}
                                             <Link to={`/dashboard/order-details/${order._id}`} state={{ orderData: order }} title="View Details" className="inline-block text-indigo-600 hover:text-indigo-900 p-2 rounded-full hover:bg-indigo-50 transition duration-150"><FiEye className="h-5 w-5"/></Link>
                                         </td>
                                     </tr>

@@ -1,11 +1,15 @@
 
 
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router";
+import { ThemeContext } from "../contexts/ThemeProvider";
 
 const Hero = () => {
+  const { theme, toggleTheme } = useContext(ThemeContext);
   return (
-    <section className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-16 md:py-24 lg:py-32 min-h-[60vh] flex items-center">
+    <section className={` text-white py-16 md:py-24 lg:py-32 min-h-[60vh] flex items-center ${theme === "light" ? "bg-gradient-to-r from-indigo-300 to-purple-300" : "bg-gray-600 "}`}>
+      {/* <div className={` relative flex mb-10 items-center justify-between px-4 py-4 shadow-md
+    ${theme === "light" ? "bg-white" : "bg-gray-600 "}`}> */}
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
         
         <div className="order-1 md:order-2 flex justify-center">

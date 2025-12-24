@@ -26,7 +26,7 @@ import Products from "../pages/Products";
 
 import PrivateRoute from "./PrivateRoute";
 import ProductDetails from "../pages/ProductDetails";
-// import PendingOrders from "../pages/PendingOrders";
+
 
 import BookingForm from "../pages/BookingForm";
 import PaymentSuccess from "../pages/payments/PaymentSuccess";

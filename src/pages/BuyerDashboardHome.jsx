@@ -1,11 +1,12 @@
 
 
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useContext } from 'react';
 import { PieChart, Pie, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 import useAxiosSecure from '../hooks/useAxiosSecure'; 
 import useAuth from '../hooks/useAuth'; 
 import { Link } from 'react-router';
+import { ThemeContext } from '../contexts/ThemeProvider';
 
 
 const COLORS = {
@@ -17,6 +18,7 @@ const COLORS = {
 };
 
 const BuyerDashboardHome = () => {
+     const { theme, toggleTheme } = useContext(ThemeContext);
     const axiosSecure = useAxiosSecure();
     const { user } = useAuth(); 
 
@@ -39,7 +41,7 @@ const BuyerDashboardHome = () => {
     const pieData = buyerStats.statusStats?.map(item => ({ name: item._id, value: item.count })) || [];
 
     return (
-        <div className="p-4 sm:p-6 lg:p-8 bg-gray-50 min-h-screen">
+        <div className={`p-4 sm:p-6 lg:p-8  ${theme === "light" ? "bg-white" : "bg-gray-600 "} min-h-screen`}>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 sm:mb-8 text-gray-800">🛒 Your Order Summary</h1>
 
             

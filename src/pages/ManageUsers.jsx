@@ -1,12 +1,14 @@
 
 
-import React, { useState } from 'react'; 
+import React, { useContext, useState } from 'react'; 
 import useAxiosSecure from '../hooks/useAxiosSecure'; 
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2'; 
 import { Helmet } from 'react-helmet-async';
+import { ThemeContext } from '../contexts/ThemeProvider';
 
 const ManageUsers = () => {
+       const { theme, toggleTheme } = useContext(ThemeContext);
     const axiosSecure = useAxiosSecure();
     const [searchQuery, setSearchQuery] = useState('');
     const [filterRole, setFilterRole] = useState('all');
@@ -69,7 +71,7 @@ const ManageUsers = () => {
     const isSuspended = (user) => user.status === 'suspended';
 
     return (
-      <div className="p-4 md:p-8">
+      <div className={`  p-4 md:p-8 ${theme === "light" ? "bg-white" : "bg-gray-600 "} `}>
         <Helmet><title>manage-users</title></Helmet>
         <h2 className="text-3xl font-bold mb-6 text-center">👥 Manage Users: {users.length}</h2>
 
@@ -79,16 +81,16 @@ const ManageUsers = () => {
                 placeholder="Search by Name or Email..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full md:w-1/3 px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full text-black md:w-1/3 px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
             />
-            <select value={filterRole} onChange={(e) => setFilterRole(e.target.value)} className="w-full md:w-1/3 px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+            <select value={filterRole} onChange={(e) => setFilterRole(e.target.value)} className="w-full text-black md:w-1/3 px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
                 <option value="all">Filter by Role (All)</option>
                 <option value="admin">Admin</option>
                 <option value="manager">Manager</option>
                 <option value="buyer">Buyer</option>
                 <option value="user">User (Pending)</option>
             </select>
-            <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="w-full md:w-1/3 px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+            <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="w-full text-black md:w-1/3 px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
                 <option value="all">Filter by Status (All)</option>
                 <option value="active">Active</option>
                 <option value="pending">Pending</option>

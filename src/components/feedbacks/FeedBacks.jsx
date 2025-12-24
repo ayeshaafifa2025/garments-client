@@ -1,11 +1,12 @@
 
-import React from "react";
+import React, { useContext } from "react";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import FeedBackCard from "./FeedBackCard";
 
 import "swiper/css";
 import "swiper/css/pagination";
+import { ThemeContext } from "../../contexts/ThemeProvider";
 
 const feedbacksData = [
   {
@@ -41,8 +42,9 @@ const feedbacksData = [
 ];
 
 const FeedBacks = () => {
+   const{theme,toggleTheme}= useContext(ThemeContext)
   return (
-    <section className="py-20 bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50">
+    <section className={`py-20 mb-5 ${theme === "light" ? " bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50" : "bg-gray-600 "} `}>
       <div className="max-w-7xl mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
           Customer Feedback

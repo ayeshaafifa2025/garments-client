@@ -2,12 +2,14 @@
 
 
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useContext } from 'react';
 import { PieChart, Pie, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import useAuth from '../hooks/useAuth';
+import { ThemeContext } from '../contexts/ThemeProvider';
 
 const ManagerDashboardHome = () => {
+   const { theme, toggleTheme } = useContext(ThemeContext);
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
 
@@ -54,7 +56,7 @@ const ManagerDashboardHome = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-10 py-6">
+    <div className={`min-h-screen  ${theme === "light" ? "bg-white" : "bg-gray-600 "} px-4 sm:px-6 lg:px-10 py-6`}>
       <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 text-gray-800 text-center sm:text-left">
         🧑‍💻 Manager's Hub
       </h1>

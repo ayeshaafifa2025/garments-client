@@ -6,32 +6,21 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
-
-
 const Products = () => {
-
     const axiosSecure = useAxiosSecure(); 
-    
-    
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10; 
-    
-   
     const [totalProducts, setTotalProducts] = useState(0); 
     const totalPages = Math.ceil(totalProducts / itemsPerPage);
-
     const { 
         data: productData = {}, 
         isLoading, 
         isError,
         refetch 
     } = useQuery({
-       
         queryKey: ['all-shop-products', currentPage], 
         
         queryFn: async () => {
-            
-            
             const res = await axiosSecure.get(`/products?page=${currentPage}&size=${itemsPerPage}`); 
             
            
@@ -41,27 +30,16 @@ const Products = () => {
         },
         
         placeholderData: (previousData) => previousData,
-        
     });
-
     const allProducts = productData.products || [];
-
-    
     const handlePageChange = (page) => {
         if (page >= 1 && page <= totalPages) {
             setCurrentPage(page);
-            
         }
     };
-    
-    
     const pageNumbers = [...Array(totalPages).keys()].map(i => i + 1);
-    
-    
     if (isLoading) return <p className="text-center text-xl p-20">Loading Products...</p>;
     if (isError) return <div className="text-center text-red-600 p-10">Error: Failed to load products.</div>;
-
-
     return (
         <div>
 <NavBar></NavBar>
@@ -71,7 +49,7 @@ const Products = () => {
                 </title>
             </Helmet>
             <>
-            <h2 className="text-4xl font-extrabold text-center py-10 text-gray-800">
+            <h2 className="text-4xl text-blue-500 font-extrabold text-center py-10 ">
                 Products
             </h2>
 
