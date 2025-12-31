@@ -5,6 +5,8 @@ Purpose:StitchFlow Tracker is a web-based platform designed for garment factorie
 
 Live URL : https://admirable-marigold-63f073.netlify.app
 
+Project Showcase: <img width="1917" height="870" alt="garments" src="https://github.com/user-attachments/assets/d82120e6-ab74-480d-8ef5-d7ab923d9d45" />
+
 
 
 Key Features:
@@ -21,6 +23,7 @@ How It Works section describing the step-by-step workflow of the system.
 Customer Feedback carousel showcasing user reviews.
 
 Two extra sections highlighting system features or production benefits.
+
 
 Footer with project description, quick links, and social media icons.
 
@@ -110,6 +113,36 @@ Responsive design for mobile, tablet, and desktop.
 Theme toggle for light/dark mode.
 
 Error page for invalid routes.
+
+## ⚙️ How to Run Locally
+
+Follow these steps to set up and run the client-side project on your machine:
+**Note:** This project also requires the server-side repository to be running for full functionality.
+
+1.  **Clone the Repository:**
+    ```bash
+    git clone [https://github.com/ayeshaafifa2025/garments-client.git](https://github.com/ayeshaafifa2025/garments-client.git)
+    ```
+2.  **Navigate to Project Directory:**
+    ```bash
+    cd garments-client
+    ```
+3.  **Install Dependencies:**
+    ```bash
+    npm install
+    ```
+4.  **Set Up Environment Variables:**
+    Create a file named `.env` in the root directory and add your Firebase configuration and server base URL:
+    ```
+    VITE_FIREBASE_API_KEY="Your_API_Key"
+    VITE_SERVER_BASE_URL="http://localhost:5000"  # Example server URL (Replace 5000 with your actual backend port)
+    ```
+5.  **Start Development Server:**
+    ```bash
+    npm run dev
+    ```
+6.  The application will open in your browser (usually at `http://localhost:5173`).
+
 
 7. Technology Stack & NPM Packages Used
  Technology Stack Overview
