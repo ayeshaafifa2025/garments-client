@@ -12,15 +12,15 @@ const features = [
 const WhyChooseUs = () => {
     const{theme,toggleTheme}= useContext(ThemeContext)
     return (
-        <section className={`py-16 mb-5 ${theme === "light" ? "bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50 " : "bg-gray-600 "}`}>
-            <div className="max-w-7xl mx-auto px-4">
+        <section className={`py-16 ${theme === "light" ? "bg-base-100 " : "bg-gray-600 "}`}>
+            <div className=" mx-auto px-4">
                 <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">Why Choose StitchFlow Tracker?</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
                     {features.map((feature, idx) => (
-                        <div key={idx} className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
-                            {feature.icon}
+                        <div key={idx} className=" rounded-lg shadow-lg p-6 text-center  hover:shadow-xl transition-shadow">
+                            {/* {feature.icon} */}
                             <h3 className="font-semibold text-black text-lg mb-2">{feature.title}</h3>
-                            <p className="text-gray-600 text-sm">{feature.desc}</p>
+                            <p className="text-black text-sm">{feature.desc}</p>
                         </div>
                     ))}
                 </div>

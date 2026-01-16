@@ -76,7 +76,7 @@ const ProductDetails = () => {
       </Helmet>
 
       <div className="flex-1 px-4 sm:px-6 lg:px-10 pt-6 pb-16 max-w-7xl mx-auto">
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-blue-600 mb-8 text-center">
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold  mb-8 text-center">
           {product.productName}
         </h1>
 
@@ -116,18 +116,18 @@ const ProductDetails = () => {
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center bg-gray-100 rounded-xl shadow-md">
-                <p className="text-gray-500">No Demo Video Available</p>
+                <p className="">No Demo Video Available</p>
               </div>
             )}
           </div>
         </div>
 
-        <div className="p-5 sm:p-8 bg-white rounded-xl shadow-xl border border-gray-100">
-          <h3 className="text-xl sm:text-2xl font-bold mb-6 border-b pb-2 text-indigo-700">
+        <div className="p-5 sm:p-8  rounded-xl shadow-xl border border-gray-100">
+          <h3 className="text-xl sm:text-2xl font-bold mb-6 border-b pb-2 ">
             Product Specifications
           </h3>
 
-          <div className="space-y-4 text-black">
+          <div className="space-y-4 ">
             <DetailRow
               label="Product Description"
               value={product.description}
@@ -174,13 +174,13 @@ const ProductDetails = () => {
 
               {product.managerPhoto && (
                 <div className="flex flex-col">
-                  <span className="font-semibold text-gray-600">
+                  <span className="font-semibold ">
                     Manager Photo:
                   </span>
                   <img
                     src={product.managerPhoto}
                     alt={product.managerName}
-                    className="w-14 h-14 sm:w-16 sm:h-16 mt-2 rounded-full object-cover border-2 border-indigo-500"
+                    className="w-14 h-14 sm:w-16 sm:h-16 mt-2 rounded-full object-cover border-2 "
                   />
                 </div>
               )}
@@ -218,10 +218,10 @@ const ProductDetails = () => {
 
 const DetailRow = ({ label, value, highlight, fullWidth }) => (
   <div className={`flex flex-col ${fullWidth ? 'col-span-full' : ''}`}>
-    <span className="font-semibold text-gray-600">{label}:</span>
+    <span className="font-semibold">{label}:</span>
     <span
       className={`break-words ${
-        highlight ? 'text-lg sm:text-xl font-bold text-indigo-600' : ''
+        highlight ? 'text-lg sm:text-xl font-bold ' : ''
       }`}
     >
       {value}

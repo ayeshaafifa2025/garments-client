@@ -12,15 +12,15 @@ const stats = [
 const StatsSection = () => {
     const{theme,toggleTheme}= useContext(ThemeContext)
     return (
-        <section className={` py-16 mb-5 ${theme === "light" ? "bg-gradient-to-r from-teal-50 via-cyan-50 to-blue-50" : "bg-gray-600 "}`}>
-            <div className="max-w-7xl mx-auto px-4">
+        <section className={` py-8 ${theme === "light" ? "bg-base-100 " : "bg-gray-600 "}`}>
+            <div className="px-4 mx-auto ">
                 <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">Our Achievements</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-center">
                     {stats.map((stat, idx) => (
-                        <div key={idx} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-                            {stat.icon}
+                        <div key={idx} className=" rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
+                            {/* {stat.icon} */}
                             <h3 className="font-bold text-2xl text-black">{stat.number}</h3>
-                            <p className="text-gray-600">{stat.label}</p>
+                            <p className="text-black">{stat.label}</p>
                         </div>
                     ))}
                 </div>

@@ -63,7 +63,7 @@ const AddProduct = () => {
         <title>add-product</title>
       </Helmet>
 
-      <div className="max-w-3xl mx-auto bg-white shadow-xl rounded-xl p-5 sm:p-8">
+      <div className="max-w-3xl mx-auto  shadow-xl rounded-xl p-5 sm:p-8">
         <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-center text-gray-800">
           Add Product
         </h2>

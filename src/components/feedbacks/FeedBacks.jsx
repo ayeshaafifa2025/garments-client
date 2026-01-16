@@ -44,9 +44,9 @@ const feedbacksData = [
 const FeedBacks = () => {
    const{theme,toggleTheme}= useContext(ThemeContext)
   return (
-    <section className={`py-20 mb-5 ${theme === "light" ? " bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50" : "bg-gray-600 "} `}>
-      <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+    <section className={`py-8  ${theme === "light" ? "bg-base-100 " : "bg-gray-600 "} `}>
+      <div className="mx-auto px-6">
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-black mb-12">
           Customer Feedback
         </h2>
 

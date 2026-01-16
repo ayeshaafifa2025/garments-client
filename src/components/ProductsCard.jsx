@@ -9,16 +9,18 @@ const ProductsCard = ({ product }) => {
         _id, 
         productName, 
         images,
+        description,
         availableQuantity, 
         price, 
         category 
     } = product || {};
+    const shortDesc = description ? description.substring(0, 50) + '...' : 'no description';
     
     const imageUrl = (images && images.length > 0) ? images[0] : 'https://i.ibb.co/h7g4B4s/placeholder-image.jpg';
 
     return (
         <div 
-            className='col-span-1 cursor-pointer group bg-white shadow-lg border border-gray-100 p-3 rounded-xl transition duration-300 hover:shadow-2xl transform hover:-translate-y-1 flex flex-col h-full w-full'
+            className='col-span-1 cursor-pointer group  shadow-lg border border-gray-100 p-3 rounded-xl transition duration-300 hover:shadow-2xl transform hover:-translate-y-1 flex flex-col h-full w-full'
         >
             <div className='flex flex-col gap-2 w-full h-full'>
                 
@@ -45,20 +47,21 @@ const ProductsCard = ({ product }) => {
                     />
                 </div>
                 
-                <div className='font-bold text-base sm:text-lg text-gray-800 truncate mt-2'>
+                <div className='text-base  truncate mt-2'>
                     {productName}
                 </div>
+                <p className='text-xs sm:text-sm  mb-3 flex-grow'>{shortDesc}</p>
                 
-                <div className='text-xs sm:text-sm text-gray-600 truncate'>
-                    Category: {category}
-                </div>
+                {/* <div className='text-xs sm:text-sm text-gray-600 truncate'>
+                    {category}
+                </div> */}
                 
-                <p className='text-xs sm:text-sm text-gray-500 mb-1 sm:mb-2'>
-                    Available: {availableQuantity} piece
-                </p>
+                {/* <p className='text-xs sm:text-sm text-gray-500 mb-1 sm:mb-2'>
+                     {availableQuantity} piece
+                </p> */}
                 
                 <div className='flex flex-row items-center justify-between mt-auto pt-2 border-t border-gray-100'>
-                    <div className='font-extrabold text-base sm:text-xl text-indigo-600'> 
+                    <div className=' text-xs'> 
                         ${price}
                     </div>
                     
@@ -75,7 +78,7 @@ const ProductsCard = ({ product }) => {
                             focus:ring-opacity-50
                         '
                     >
-                        <span className="text-xs sm:text-sm font-semibold text-white bg-indigo-500 px-3 py-1.5 rounded-lg shadow-md hover:bg-indigo-600 transition">
+                        <span className="text-xs sm:text-sm font-semibold text-white  px-3 py-1.5 rounded-lg shadow-md hover:bg-indigo-600 transition">
                             View Details
                         </span>
                     </Link>

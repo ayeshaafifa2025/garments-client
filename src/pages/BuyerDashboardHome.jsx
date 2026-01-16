@@ -46,27 +46,27 @@ const BuyerDashboardHome = () => {
 
             
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 lg:mb-10">
-                <div className="stat bg-white shadow-lg rounded-xl p-4 sm:p-6 border-b-4 border-indigo-500">
-                    <div className="stat-title text-gray-500 font-medium text-sm sm:text-base">Total Orders</div>
-                    <div className="stat-value text-xl sm:text-3xl text-indigo-700 font-extrabold">{buyerStats.totalOrders || 0}</div>
+                <div className="stat  shadow-lg rounded-xl p-4 sm:p-6 border-b-4 ">
+                    <div className="stat-title  font-medium text-sm sm:text-base">Total Orders</div>
+                    <div className="stat-value text-xl sm:text-3xl  font-extrabold">{buyerStats.totalOrders || 0}</div>
                 </div>
-                <div className="stat bg-white shadow-lg rounded-xl p-4 sm:p-6 border-b-4 border-amber-500">
-                    <div className="stat-title text-gray-500 font-medium text-sm sm:text-base">Pending Orders</div>
-                    <div className="stat-value text-xl sm:text-3xl text-amber-700 font-extrabold">{buyerStats.pendingOrders || 0}</div>
+                <div className="stat  shadow-lg rounded-xl p-4 sm:p-6 border-b-4 ">
+                    <div className="stat-title  font-medium text-sm sm:text-base">Pending Orders</div>
+                    <div className="stat-value text-xl sm:text-3xl  font-extrabold">{buyerStats.pendingOrders || 0}</div>
                 </div>
-                <div className="stat bg-white shadow-lg rounded-xl p-4 sm:p-6 border-b-4 border-blue-500">
-                    <div className="stat-title text-gray-500 font-medium text-sm sm:text-base">Processing Orders</div>
-                    <div className="stat-value text-xl sm:text-3xl text-blue-700 font-extrabold">{buyerStats.approvedOrders || 0}</div>
+                <div className="stat shadow-lg rounded-xl p-4 sm:p-6 border-b-4 ">
+                    <div className="stat-title  font-medium text-sm sm:text-base">Processing Orders</div>
+                    <div className="stat-value text-xl sm:text-3xl  font-extrabold">{buyerStats.approvedOrders || 0}</div>
                 </div>
-                <div className="stat bg-white shadow-lg rounded-xl p-4 sm:p-6 border-b-4 border-green-500">
-                    <div className="stat-title text-gray-500 font-medium text-sm sm:text-base">Delivered Orders</div>
-                    <div className="stat-value text-xl sm:text-3xl text-green-700 font-extrabold">{buyerStats.deliveredOrders || 0}</div>
+                <div className="stat shadow-lg rounded-xl p-4 sm:p-6 border-b-4 ">
+                    <div className="stat-title  font-medium text-sm sm:text-base">Delivered Orders</div>
+                    <div className="stat-value text-xl sm:text-3xl  font-extrabold">{buyerStats.deliveredOrders || 0}</div>
                 </div>
             </div>
 
             
-            <div className="bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full max-w-lg mx-auto">
-                <h3 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700 text-center">Your Order Status Breakdown </h3>
+            <div className=" p-4 sm:p-6 rounded-xl shadow-lg w-full max-w-lg mx-auto">
+                <h3 className="text-lg sm:text-xl font-semibold mb-4  text-center">Your Order Status Breakdown </h3>
                 <ResponsiveContainer width="100%" height={300}>
                     <PieChart>
                         <Pie
@@ -94,7 +94,7 @@ const BuyerDashboardHome = () => {
             
             
             <div className="mt-8 sm:mt-10 text-center">
-                <h3 className="text-xl font-semibold mb-4 text-gray-700">Quick Actions</h3>
+                <h3 className="text-xl font-semibold mb-4">Quick Actions</h3>
                 <div className="flex justify-center space-x-3 sm:space-x-4">
                     
                     <Link to="/dashboard/my-orders" className="btn btn-sm sm:btn-md bg-blue-500 text-white hover:bg-blue-600 border-none px-4 sm:px-6">View My Orders</Link>

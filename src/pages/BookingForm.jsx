@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import useAuth from '../hooks/useAuth';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import { Helmet } from 'react-helmet-async';
+import NavBar from '../components/NavBar';
 
 const splitName = (displayName) => {
     if (!displayName) return { firstName: '', lastName: '' };
@@ -19,11 +20,11 @@ const splitName = (displayName) => {
 
 const InputField = ({ label, value, readOnly, highlight, className = '' }) => (
     <div className="flex flex-col">
-        <label className="text-xs sm:text-sm font-medium text-gray-600">{label}</label>
+        <label className="text-xs sm:text-sm font-medium ">{label}</label>
         <input 
             value={value} 
             readOnly={readOnly} 
-            className={`p-2 sm:p-3 rounded-lg text-sm ${readOnly ? 'bg-gray-100 text-gray-700 border border-gray-300' : 'border'} ${highlight ? 'font-bold text-base sm:text-lg text-indigo-700 bg-indigo-50' : ''} ${className}`} 
+            className={`p-2 sm:p-3 rounded-lg text-sm ${readOnly ? '  border border-gray-300' : 'border'} ${highlight ? 'font-bold text-base sm:text-lg  ' : ''} ${className}`} 
         />
     </div>
 );
@@ -32,12 +33,12 @@ const ManagerPhotoField = ({ label, photoUrl, managerName }) => {
 
     return (
         <div className="flex flex-col">
-            <label className="text-xs sm:text-sm font-medium text-gray-600">{label}</label>
+            <label className="text-xs sm:text-sm font-medium ">{label}</label>
             <div className="mt-1 sm:mt-2">
                 <img 
                     src={photoUrl} 
                     alt={managerName || "Manager Photo"} 
-                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-indigo-500 shadow-md"
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 shadow-md"
                     loading="lazy"
                 />
             </div>
@@ -47,7 +48,7 @@ const ManagerPhotoField = ({ label, photoUrl, managerName }) => {
 
 const QuantityField = ({ register, errors, min, max }) => (
     <div className="flex flex-col">
-        <label className="text-xs sm:text-sm font-medium text-gray-600">Order Quantity (Min: {min}, Max: {max})</label>
+        <label className="text-xs sm:text-sm font-medium  ">Order Quantity (Min: {min}, Max: {max})</label>
         <input 
             type="number"
             {...register("orderQuantity", { 
@@ -56,7 +57,7 @@ const QuantityField = ({ register, errors, min, max }) => (
                 min: { value: min, message: `Minimum order is ${min}` },
                 max: { value: max, message: `Maximum available is ${max}` }
             })} 
-            className="border p-2 sm:p-3 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm" 
+            className="border  p-2 sm:p-3 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm" 
         />
         {errors.orderQuantity && <p className="text-red-500 text-xs mt-1">{errors.orderQuantity.message}</p>}
     </div>
@@ -161,7 +162,10 @@ const BookingForm = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div>
+            <NavBar></NavBar>
+
+            <div className="min-h-screen ">
             <Helmet>
                 <title>
                     Booking Form
@@ -170,13 +174,13 @@ const BookingForm = () => {
 
 
             <div className="container mx-auto p-4 sm:p-6 pt-8 sm:pt-10">
-                <h2 className="text-2xl sm:text-3xl font-extrabold mb-6 sm:mb-8 text-center text-gray-800">
-                    <span className="text-green-600">Order Booking:</span> {productData.productName}
+                <h2 className="text-2xl sm:text-3xl font-extrabold mb-6 sm:mb-8 text-center ">
+                    <span className="">Order Booking:</span> {productData.productName}
                 </h2>
                 
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6 max-w-2xl mx-auto bg-white p-6 sm:p-8 rounded-xl shadow-2xl border border-gray-100">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6 max-w-2xl mx-auto p-6 sm:p-8 rounded-xl shadow-2xl border border-gray-100">
                     
-                    <h3 className="text-lg sm:text-xl font-bold border-b pb-2 text-indigo-700">Buyer & Product Information</h3>
+                    <h3 className="text-lg sm:text-xl font-bold border-b pb-2 ">Buyer & Product Information</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                         <InputField label="Buyer Email (Read-only)" value={user?.email} readOnly />
                         <InputField label="Product Title (Read-only)" value={productData.productName} readOnly />
@@ -204,13 +208,13 @@ const BookingForm = () => {
                             value={`$${calculatedPrice}`} 
                             readOnly 
                             highlight 
-                            className="bg-yellow-50 border-yellow-300"
+                            className=""
                         />
                     </div>
 
-                    <h3 className="text-lg sm:text-xl font-bold border-b pb-2 pt-4 sm:pt-6 text-indigo-700">Order & Delivery Details</h3>
+                    <h3 className="text-lg sm:text-xl font-bold border-b pb-2 pt-4 sm:pt-6 ">Order & Delivery Details</h3>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-black sm:gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3  sm:gap-4">
                         <QuantityField 
                             register={register} 
                             errors={errors}
@@ -239,24 +243,24 @@ const BookingForm = () => {
             }
         })} 
         placeholder="Your Contact Number (e.g., 0171XXXXXXXXX)" 
-        className="border p-2 sm:p-3 rounded-lg text-black focus:ring-indigo-500 focus:border-indigo-500 text-sm" 
+        className="border p-2 sm:p-3 rounded-lg  focus:ring-indigo-500 focus:border-indigo-500 text-sm" 
     />
     {errors.contactNumber && <p className="text-red-500 text-xs mt-1">{errors.contactNumber.message}</p>}
 </div>
 
                     <div className="flex flex-col">
-                        <label className="text-xs sm:text-sm font-medium text-gray-600">Delivery Address</label>
+                        <label className="text-xs sm:text-sm font-medium ">Delivery Address</label>
                         <textarea {...register("deliveryAddress", { required: "Delivery Address is required" })} 
                             placeholder="Your full delivery address" rows="2" 
-                            className="w-full border text-black p-2 sm:p-3 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm" />
+                            className="w-full border  p-2 sm:p-3 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm" />
                         {errors.deliveryAddress && <p className="text-red-500 text-xs mt-1">{errors.deliveryAddress.message}</p>}
                     </div>
 
                     <div className="flex flex-col">
-                        <label className="text-xs sm:text-sm font-medium text-gray-600">Additional Notes / Instructions</label>
+                        <label className="text-xs sm:text-sm font-medium ">Additional Notes / Instructions</label>
                         <textarea {...register("additionalNotes")} 
                             placeholder="e.g., Delivery instructions, preferred time (Optional)" rows="2" 
-                            className="w-full border text-black p-2 sm:p-3 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm" />
+                            className="w-full border  p-2 sm:p-3 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm" />
                     </div>
 
 
@@ -280,6 +284,9 @@ const BookingForm = () => {
                 </form>
             </div>
         </div>
+
+        </div>
+        
     );
 };
 

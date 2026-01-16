@@ -46,8 +46,7 @@ const { theme, toggleTheme } = useContext(ThemeContext);
     const links = <>
         <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/products">Products</NavLink></li>
-        {
-            !user && <>
+         <>
             <li>
                 <NavLink
                     to="/quick/about"
@@ -65,7 +64,7 @@ const { theme, toggleTheme } = useContext(ThemeContext);
                 </NavLink>
             </li>
             </>
-        }
+        
         {
             user && <>
                 <li><NavLink to="/dashboard">Dashboard</NavLink></li>
@@ -75,8 +74,8 @@ const { theme, toggleTheme } = useContext(ThemeContext);
 
     return (
         // <div className="navbar bg-base-200 mb-10 shadow-md">
-        <div className={` relative flex mb-5 items-center justify-between px-4 py-4 shadow-md
-    ${theme === "light" ? "bg-white" : "bg-gray-600 "}`}>
+       <div className={`sticky top-0 z-50 flex items-center justify-between px-4 py-2 shadow-md 
+    ${theme === "light" ? "bg-base-100" : "bg-gray-600"}`}>
             <div className="navbar-start w-1/2 lg:w-auto">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn bg-black text-white btn-ghost lg:hidden">

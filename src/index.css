@@ -1,2 +1,9 @@
 @import "tailwindcss";
 @plugin "daisyui";
+@theme {
+  @keyframes shimmer {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(100%); }
+  }
+  --animate-shimmer: shimmer 2s infinite;
+}

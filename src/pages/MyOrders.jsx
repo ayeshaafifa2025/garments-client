@@ -108,34 +108,34 @@ const MyOrders = () => {
             </Helmet>
 
             <div className="p-4 sm:p-6 lg:p-8">
-                <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-800">My Orders</h1>
+                <h1 className="text-2xl sm:text-3xl font-bold mb-6 ">My Orders</h1>
                 
-                <div className="overflow-x-auto bg-white rounded-xl shadow-lg">
+                <div className="overflow-x-auto  rounded-xl shadow-lg">
                     <table className="min-w-full divide-y divide-gray-200">
-                        <thead className="bg-gray-50">
+                        <thead className="">
                             <tr>
-                                <th className="px-3 sm:px-4 lg:px-6 py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">TRACKING ID</th>
-                                <th className="px-3 sm:px-4 lg:px-6 py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">PRODUCT</th>
-                                <th className="px-3 sm:px-4 lg:px-6 py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">QTY</th>
-                                <th className="px-3 sm:px-4 lg:px-6 py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">STATUS</th>
-                                <th className="px-3 sm:px-4 lg:px-6 py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">PAYMENT</th>
-                                <th className="px-3 sm:px-4 lg:px-6 py-3 text-left text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">DATE & TIME</th> {/* টেবিল হেডার আপডেট করা হলো */}
-                                <th className="px-3 sm:px-4 lg:px-6 py-3 text-center text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">ACTION</th>
+                                <th className="px-3 sm:px-4 lg:px-6 py-3 text-left text-[10px] sm:text-xs font-medium  uppercase tracking-wider">TRACKING ID</th>
+                                <th className="px-3 sm:px-4 lg:px-6 py-3 text-left text-[10px] sm:text-xs font-medium  uppercase tracking-wider">PRODUCT</th>
+                                <th className="px-3 sm:px-4 lg:px-6 py-3 text-left text-[10px] sm:text-xs font-medium  uppercase tracking-wider">QTY</th>
+                                <th className="px-3 sm:px-4 lg:px-6 py-3 text-left text-[10px] sm:text-xs font-medium  uppercase tracking-wider">STATUS</th>
+                                <th className="px-3 sm:px-4 lg:px-6 py-3 text-left text-[10px] sm:text-xs font-medium  uppercase tracking-wider">PAYMENT</th>
+                                <th className="px-3 sm:px-4 lg:px-6 py-3 text-left text-[10px] sm:text-xs font-medium  uppercase tracking-wider">DATE & TIME</th> 
+                                <th className="px-3 sm:px-4 lg:px-6 py-3 text-center text-[10px] sm:text-xs font-medium  uppercase tracking-wider">ACTION</th>
                             </tr>
                         </thead>
-                        <tbody className="bg-white divide-y divide-gray-200">
+                        <tbody className=" divide-y divide-gray-200">
                             {orders.map((order) => (
                                 <tr key={order._id}>
                                     
-                                    <td className="px-3 sm:px-4 lg:px-6 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-indigo-600">{order.trackingId}</td>
+                                    <td className="px-3 sm:px-4 lg:px-6 py-4 whitespace-nowrap text-xs sm:text-sm font-medium ">{order.trackingId}</td>
                                     
-                                    <td className="px-3 sm:px-4 lg:px-6 py-4 whitespace-nowrap text-xs sm:text-sm text-gray-900">{order.productTitle}</td>
-                                    <td className="px-3 sm:px-4 lg:px-6 py-4 whitespace-nowrap text-xs sm:text-sm text-gray-500">{order.orderQuantity}</td>
+                                    <td className="px-3 sm:px-4 lg:px-6 py-4 whitespace-nowrap text-xs sm:text-sm ">{order.productTitle}</td>
+                                    <td className="px-3 sm:px-4 lg:px-6 py-4 whitespace-nowrap text-xs sm:text-sm ">{order.orderQuantity}</td>
                                     <td className="px-3 sm:px-4 lg:px-6 py-4 whitespace-nowrap">
                                         <span className={`px-2 inline-flex text-[10px] sm:text-xs leading-5 font-semibold rounded-full ${
-                                            (order.currentTrackingStatus || order.status) === 'Pending' ? 'bg-yellow-100 text-yellow-800' : 
-                                            (order.currentTrackingStatus || order.status) === 'Cancelled' ? 'bg-red-100 text-red-800' : 
-                                            (order.currentTrackingStatus || order.status) === 'Delivered' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
+                                            (order.currentTrackingStatus || order.status) === 'Pending' ? 'bg-yellow-100 text-blue-800' : 
+                                            (order.currentTrackingStatus || order.status) === 'Cancelled' ? 'bg-red-100 text-blue-800  ' : 
+                                            (order.currentTrackingStatus || order.status) === 'Delivered' ? 'bg-green-100 text-blue-800  ' : 'bg-blue-100 text-blue-800'
                                         }`}>
                                             {order.currentTrackingStatus || order.status}
                                         </span>
@@ -146,12 +146,12 @@ const MyOrders = () => {
                                         </span>
                                     </td>
                                
-                                    <td className="px-3 sm:px-4 lg:px-6 py-4 whitespace-nowrap text-xs sm:text-sm text-gray-500">{formatDate(order.createdAt)}</td> 
+                                    <td className="px-3 sm:px-4 lg:px-6 py-4 whitespace-nowrap text-xs sm:text-sm ">{formatDate(order.createdAt)}</td> 
                                     <td className="px-3 sm:px-4 lg:px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm font-medium flex flex-col gap-5 items-center justify-center space-y-1 sm:space-y-0 sm:space-x-2">
                                         
                                         <Link to={`/dashboard/order-details/${order._id}`} state={{ orderData: order }}>
                                             <button className="
-                                                text-gray-700 bg-white shadow 
+                                                 shadow 
                                                 border border-gray-300
                                                 text-[10px] sm:text-xs 
                                                 px-2 py-1 sm:px-3 sm:py-1.5 
@@ -168,7 +168,7 @@ const MyOrders = () => {
                                         
                                         <Link to={`/dashboard/track-order/${order.trackingId}`}>
                                             <button className="
-                                                text-gray-700 bg-white shadow 
+                                                 shadow 
                                                 border border-gray-300
                                                 text-[10px] sm:text-xs 
                                                 px-2 py-1 sm:px-3 sm:py-1.5 
@@ -188,7 +188,7 @@ const MyOrders = () => {
                                             <button 
                                                 onClick={() => handleCancel(order._id, order.trackingId)}
                                                 className="
-                                                    text-gray-700 bg-white shadow 
+                                                     shadow 
                                                     border border-gray-300
                                                     text-[10px] sm:text-xs 
                                                     px-2 py-1 sm:px-3 sm:py-1.5 

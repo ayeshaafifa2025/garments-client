@@ -65,12 +65,12 @@ const ApprovedOrders = () => {
     );
 
   return (
-    <div className={`min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-10 py-6  ${theme === "light" ? "bg-white" : "bg-gray-600 "}` }>
+    <div className={`min-h-screen  px-4 sm:px-6 lg:px-10 py-6  ${theme === "light" ? "bg-white" : "bg-gray-600 "}` }>
       <Helmet>
         <title>approved orders</title>
       </Helmet>
 
-      <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-green-700 border-b pb-3">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-6  border-b pb-3">
         Approved Orders
       </h2>
 
@@ -79,39 +79,39 @@ const ApprovedOrders = () => {
       </p>
 
       {approvedOrders.length === 0 ? (
-        <div className="text-center text-lg sm:text-xl text-gray-500 py-20 bg-white rounded-xl shadow">
+        <div className="text-center text-lg sm:text-xl text-gray-500 py-20  rounded-xl shadow">
           No approved order
         </div>
       ) : (
-        <div className="overflow-x-auto bg-white rounded-xl shadow-xl">
-          <table className="min-w-[900px] w-full divide-y divide-gray-200">
-            <thead className="bg-green-50">
+        <div className="overflow-x-auto  rounded-xl shadow-xl">
+          <table className="min-w-[900px] w-full divide-y ">
+            <thead className="">
               <tr>
-                <th className="px-4 py-3 text-left text-xs font-bold text-green-700 uppercase">
+                <th className="px-4 py-3 text-left text-xs font-bold  uppercase">
                   Order ID
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-bold text-green-700 uppercase">
+                <th className="px-4 py-3 text-left text-xs font-bold  uppercase">
                   Buyer
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-bold text-green-700 uppercase">
+                <th className="px-4 py-3 text-left text-xs font-bold  uppercase">
                   Product
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-bold text-green-700 uppercase">
+                <th className="px-4 py-3 text-left text-xs font-bold  uppercase">
                   Qty
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-bold text-green-700 uppercase">
+                <th className="px-4 py-3 text-left text-xs font-bold  uppercase">
                   Status
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-bold text-green-700 uppercase">
+                <th className="px-4 py-3 text-left text-xs font-bold  uppercase">
                   Approved Date
                 </th>
-                <th className="px-4 py-3 text-center text-xs font-bold text-green-700 uppercase">
+                <th className="px-4 py-3 text-center text-xs font-bold  uppercase">
                   Actions
                 </th>
               </tr>
             </thead>
 
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className=" divide-y divide-gray-200">
               {approvedOrders.map(order => {
                 const status =
                   order.currentTrackingStatus || order.status;
@@ -126,35 +126,35 @@ const ApprovedOrders = () => {
                     : 'bg-blue-100 text-blue-800';
 
                 return (
-                  <tr key={order._id} className="hover:bg-gray-50">
-                    <td className="px-4 py-3 text-sm font-semibold text-green-600">
+                  <tr key={order._id} className="">
+                    <td className="px-4 py-3 text-sm font-semibold ">
                       {order.trackingId || 'N/A'}
                     </td>
 
-                    <td className="px-4 py-3 text-sm text-gray-900">
+                    <td className="px-4 py-3 text-sm ">
                       {order.firstName} {order.lastName}
-                      <div className="text-xs text-gray-500">
+                      <div className="text-xs ">
                         {order.buyerEmail}
                       </div>
                     </td>
 
-                    <td className="px-4 py-3 text-sm font-medium text-gray-700">
+                    <td className="px-4 py-3 text-sm font-medium ">
                       {order.productTitle}
                     </td>
 
-                    <td className="px-4 py-3 text-sm text-gray-500">
+                    <td className="px-4 py-3 text-sm ">
                       {order.orderQuantity}
                     </td>
 
-                    <td className="px-4 py-3">
+                    <td className="">
                       <span
-                        className={`px-2 py-1 text-xs font-semibold rounded-full ${badge}`}
+                        className={`text-xs  `}
                       >
                         {status}
                       </span>
                     </td>
 
-                    <td className="px-4 py-3 text-sm text-gray-500">
+                    <td className="px-4 py-3 text-sm">
                       {order.approvedAt
                         ? format(
                             new Date(order.approvedAt),
@@ -166,7 +166,7 @@ const ApprovedOrders = () => {
                     <td className="px-4 py-3 text-center space-y-2 sm:space-y-0 sm:space-x-2 flex flex-col sm:flex-row justify-center">
                       <button
                         onClick={() => handleAddTracking(order)}
-                        className="inline-flex items-center justify-center gap-1 px-3 py-2 rounded-lg bg-gradient-to-r from-purple-300 via-cyan-200 to-teal-300 shadow hover:scale-105 transition"
+                        className="inline-flex items-center justify-center gap-1 px-3 py-2 rounded-lg  shadow hover:scale-105 transition"
                       >
                         <Truck className="w-4 h-4" />
                         <span className="text-xs font-medium">
@@ -177,7 +177,7 @@ const ApprovedOrders = () => {
                       <Link
                         to={`/dashboard/order-details/${order._id}`}
                         state={{ orderData: order }}
-                        className="inline-flex items-center justify-center gap-1 px-3 py-2 text-xs font-medium rounded-lg border border-gray-300 bg-white hover:bg-gray-100"
+                        className="inline-flex items-center justify-center gap-1 px-3 py-2 text-xs font-medium rounded-lg border "
                       >
                         <Eye className="w-4 h-4" />
                         Details

@@ -62,42 +62,42 @@ const ManagerDashboardHome = () => {
       </h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-        <div className="bg-white shadow-lg rounded-xl p-5 sm:p-6 border-l-4 border-indigo-500">
-          <div className="text-gray-500 font-medium">
+        <div className=" shadow-lg rounded-xl p-5 sm:p-6 border-l-4 border-indigo-500">
+          <div className=" font-medium">
             Total Products Uploaded
           </div>
-          <div className="text-3xl sm:text-4xl font-bold text-indigo-700 mt-2">
+          <div className="text-3xl sm:text-4xl font-bold  mt-2">
             {managerStats.totalProducts || 0}
           </div>
-          <div className="text-sm text-gray-500 mt-1">
+          <div className="text-sm  mt-1">
             Your inventory contribution
           </div>
         </div>
 
-        <div className="bg-white shadow-lg rounded-xl p-5 sm:p-6 border-l-4 border-red-500">
-          <div className="text-gray-500 font-medium">Pending Orders</div>
-          <div className="text-3xl sm:text-4xl font-bold text-red-700 mt-2">
+        <div className=" shadow-lg rounded-xl p-5 sm:p-6 border-l-4 border-red-500">
+          <div className=" font-medium">Pending Orders</div>
+          <div className="text-3xl sm:text-4xl font-bold  mt-2">
             {managerStats.pendingOrdersCount || 0}
           </div>
-          <div className="text-sm font-semibold text-red-600 mt-1">
+          <div className="text-sm font-semibold mt-1">
             Action Required!
           </div>
         </div>
 
-        <div className="bg-white shadow-lg rounded-xl p-5 sm:p-6 border-l-4 border-green-500">
-          <div className="text-gray-500 font-medium">Orders in Tracking</div>
-          <div className="text-3xl sm:text-4xl font-bold text-green-700 mt-2">
+        <div className="shadow-lg rounded-xl p-5 sm:p-6 border-l-4 border-green-500">
+          <div className=" font-medium">Orders in Tracking</div>
+          <div className="text-3xl sm:text-4xl font-bold  mt-2">
             {managerStats.approvedOrdersCount || 0}
           </div>
-          <div className="text-sm text-gray-500 mt-1">
+          <div className="text-sm  mt-1">
             Approved and being fulfilled
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-white p-4 sm:p-6 rounded-xl shadow-lg">
-          <h3 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700 text-center sm:text-left">
+        <div className=" p-4 sm:p-6 rounded-xl shadow-lg">
+          <h3 className="text-lg sm:text-xl font-semibold mb-4  text-center sm:text-left">
             Your Inventory Stock Status
           </h3>
 
@@ -129,8 +129,8 @@ const ManagerDashboardHome = () => {
           </div>
         </div>
 
-        <div className="bg-white p-4 sm:p-6 rounded-xl shadow-lg">
-          <h3 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700 text-center sm:text-left">
+        <div className=" p-4 sm:p-6 rounded-xl shadow-lg">
+          <h3 className="text-lg sm:text-xl font-semibold mb-4 text-center sm:text-left">
             Tracking Status of Approved Orders
           </h3>
 
